@@ -1,0 +1,21 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="orgs_added" class="table-responsive">
+
+    <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Наименование Организации</th>
+                <th>Собственник</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="el : ${orgs}">
+                <td th:text="${el.id}"></td>
+                <td th:text="${el.org_name}"></td>
+                <td th:text="${el.org_owner}"></td>
+                <td><span class="fa fa-pencil fa-fw" th:id="${el.id}" style="margin-right: 10px" onclick="getOrgEditForm(this.id)"></span><span class="fa fa-trash fa-fw" th:id="${el.id}" onclick="orgDelete(this.id)"></span></td>
+            </tr>
+            </tbody>
+    </table>
+
+</div>

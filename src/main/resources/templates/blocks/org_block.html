@@ -1,0 +1,86 @@
+<div th:fragment="org_block" xmlns:th="http://www.thymeleaf.org">
+
+
+    <!-- PAGE TITLE -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" id="page-header">Организации</h1>
+        </div>
+    </div>
+
+    <!-- WIDGETS -->
+    <div class="row" id="widgets">
+        <div class="col-lg-6 col-md-6" id="org_form">
+            <div style="margin-bottom:20px">
+                <h4>Добавить организацию</h4>
+                <form>
+                    <input type="text" name="org_name" id="org_name" placeholder="введите название организации" class="form-control"/><br>
+                    <input type="text" name="org_owner" id="org_owner" placeholder="собственник" class="form-control"/><br>
+                    <button type="button" class="btn btn-success" onclick="orgAddCheck()">добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row col-lg-4 col-md-4" style="margin-bottom: 20px">
+        <form class="form-inline">
+
+            <script> // SEARCH SCRIPT
+            $(document).ready(function () {
+                var timer;
+                $('#org_search').keyup(function(){
+                    var searchFor = $('#org_search').val().trim();
+                    window.clearTimeout(timer);
+                    if (searchFor.length > 2) {
+                        //alert(searchFor);
+                        //loading_show();
+                        timer = setTimeout(function () {
+                            $.ajax({
+                                url: "/org-search",
+                                cache: false,
+                                type: "POST",
+                                data: {
+                                    searchFor: searchFor
+                                },
+                                success: function(text){
+                                    $("#org-panel-body").html(text);
+                                    //loading_hide();
+                                }
+                            });
+                        }, 1000);
+                    }
+                });
+            });
+            </script>
+            <input type="text" class="form-control" placeholder="поиск..." id="org_search">
+            <button type="button" class="btn btn-success" onclick="orgShowAll()">все</button>
+            <!--                             <span class="input-group-btn">-->
+            <!--                                <button class="btn btn-success" type="button">все</button>-->
+            <!--                            </span>-->
+
+        </form>
+    </div>
+
+    <!-- CONTENTS -->
+    <div class="row" id="contents">
+
+        <!-- RIGHT PANEL OF CONTENTS -->
+        <div class="col-lg-12 col-md-6">
+            <div class="panel panel-default" id="alert-panel">
+                <div class="panel-heading">
+                    <i class="fa fa-list-alt fa-fw"></i>
+                </div>
+
+                <div class="panel-body" id="org-panel-body">
+
+                    <div class="table-responsive" th:replace="results/orgs-added :: orgs_added"></div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>

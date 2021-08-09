@@ -1,0 +1,28 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="terminals_added" class="table-responsive">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Наименование организации</th>
+            <th>TID</th>
+            <th>Адрес установки / описание</th>
+            <th>статус</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${page.getContent()}" class="terminalsTotal">
+            <td th:text="${el.id}"></td>
+            <td th:text="${el.org_name}"></td>
+            <td th:text="${el.terminal_tid}"></td>
+            <td th:text="${el.terminal_tsp}"></td>
+            <td th:switch="${el.terminal_status}">
+                <span th:case="1">акт.</span>
+                <span th:case="0">не акт.</span>
+            </td>
+            <td><span class="fa fa-pencil fa-fw" th:id="${el.id}" style="margin-right: 10px" onclick="getTerminalEditForm(this.id)"></span><span class="fa fa-trash fa-fw" th:id="${el.id}" onclick="terminalDelete(this.id)"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

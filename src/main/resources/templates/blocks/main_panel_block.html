@@ -1,0 +1,183 @@
+<div th:fragment="main_panel_block" xmlns:th="http://www.thymeleaf.org">
+
+
+    <!-- PAGE TITLE -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" id="page-header">Главная панель</h1>
+        </div>
+    </div>
+
+    <!-- WIDGETS -->
+
+    <script>
+
+        // $(document).ready(function () {
+        //
+        //     $.ajax({
+        //         url: "/counters",
+        //         dataType: "json",
+        //         type: "GET",
+        //         success: function (data) {
+        //             resultData = data;
+        //             result($.map(data, function (item) {
+        //                 $("total_orgs").html(item.total_orgs);
+        //                 $("total_terminals").html(item.total_terminals);
+        //                 $("total_operations").html(item.total_operations);
+        //             }));
+        //
+        //         }
+        //     });
+        // });
+
+    </script>
+    <div class="row" id="widgets">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-comments fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge" id="total-orgs">26</div>
+                            <div>Всего организаций</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="/">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-tasks fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge" id="total-terminals">12</div>
+                            <div>Всего терминалов</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge" id="total-operations">124</div>
+                            <div>Всего операций</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-support fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge" id="operations-in-min">13</div>
+                            <div>Операций в минуту</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENTS -->
+    <div class="row" id="contents">
+
+        <!-- SIGNAL PANEL OF CONTENTS -->
+        <div class="col-lg-12">
+            <div class="panel panel-default" id="alert-panel">
+                <div class="panel-heading">
+                    <i class="fa fa-warning fa-fw"></i>
+                </div>
+
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-comment fa-fw"></i> New Comment
+                            <span class="pull-right text-muted small"><em>4 minutes ago</em></span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                            <span class="pull-right text-muted small"><em>12 minutes ago</em></span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-envelope fa-fw"></i> Message Sent
+                            <span class="pull-right text-muted small"><em>27 minutes ago</em></span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-tasks fa-fw"></i> New Task
+                            <span class="pull-right text-muted small"><em>43 minutes ago</em></span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                            <span class="pull-right text-muted small"><em>11:32 AM</em></span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+                            <span class="pull-right text-muted small"><em>11:13 AM</em></span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-warning fa-fw"></i> Server Not Responding
+                            <span class="pull-right text-muted small"><em>10:57 AM</em></span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+                            <span class="pull-right text-muted small"><em>9:49 AM</em></span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-money fa-fw"></i> Payment Received
+                            <span class="pull-right text-muted small"><em>Yesterday</em></span>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
