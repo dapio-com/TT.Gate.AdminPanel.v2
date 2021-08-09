@@ -2,7 +2,7 @@ package com.ttranz.ttgateadmin.controllers;
 
 
 import com.ttranz.ttgateadmin.dto.DtoOrgsAutocomplete;
-import com.ttranz.ttgateadmin.models.Orgs;
+import com.ttranz.ttgateadmin.models.Org;
 import com.ttranz.ttgateadmin.repo.OrgRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +18,14 @@ import java.util.Optional;
 
 
 @Controller
-public class OrgsController {
+public class OrgController {
 
     @Autowired
     private OrgRepository orgRepository;
 
     @GetMapping("/org-panel")
     public String getOrgPanel(Model model){
-        Iterable<Orgs> orgs = orgRepository.selectLastN();
+        Iterable<Org> orgs = orgRepository.selectLastN();
         model.addAttribute("orgs", orgs);
         return "blocks/org_block";
     }
@@ -44,10 +44,10 @@ public class OrgsController {
 
     @PostMapping("/org-add")
     public String orgAdd(@RequestParam String org_name, String org_owner, Model model){
-        Orgs org = new Orgs(org_name, org_owner);
+        Org org = new Org(org_name, org_owner);
         orgRepository.save(org);
 
-        Iterable<Orgs> orgs = orgRepository.selectLastN();
+        Iterable<Org> orgs = orgRepository.selectLastN();
         model.addAttribute("orgs", orgs);
         return "results/orgs-added";
     }
@@ -57,8 +57,8 @@ public class OrgsController {
         if(!orgRepository.existsById(id)){
             return "/";
         }
-        Optional<Orgs> org = orgRepository.findById(id);
-        ArrayList<Orgs> result = new ArrayList<>();
+        Optional<Org> org = orgRepository.findById(id);
+        ArrayList<Org> result = new ArrayList<>();
         org.ifPresent(result::add);
         model.addAttribute("org", result);
         return "blocks/org_edit_form_block";
@@ -66,7 +66,7 @@ public class OrgsController {
 
     @PostMapping("/org-edit")
     public String orgUpdate(@RequestParam long id, @RequestParam String org_name, @RequestParam String org_owner, Model model){
-        Orgs org = orgRepository.findById(id).orElseThrow();
+        Org org = orgRepository.findById(id).orElseThrow();
         org.setOrg_name(org_name);
         org.setOrg_owner(org_owner);
         orgRepository.save(org);
@@ -76,7 +76,7 @@ public class OrgsController {
 
     @PostMapping("/org-delete")
     public String orgDelete(@RequestParam long id) {
-        Orgs org = orgRepository.findById(id).orElseThrow();
+        Org org = orgRepository.findById(id).orElseThrow();
         orgRepository.delete(org);
 
         return "results/ok";
@@ -85,7 +85,7 @@ public class OrgsController {
 
     @PostMapping("/org-search")
     public String orgSearch(@RequestParam String searchFor, Model model) {
-        Iterable<Orgs> orgs = orgRepository.searchForOrg(searchFor);
+        Iterable<Org> orgs = orgRepository.searchForOrg(searchFor);
         model.addAttribute("orgs", orgs);
 
         return "results/orgs-added";
@@ -102,7 +102,7 @@ public class OrgsController {
 
     @PostMapping("/org-show-all")
     public String orgShowAll(Model model) {
-        Iterable<Orgs> orgs = orgRepository.findAll();
+        Iterable<Org> orgs = orgRepository.findAll();
         model.addAttribute("orgs", orgs);
 
         return "results/orgs-added";

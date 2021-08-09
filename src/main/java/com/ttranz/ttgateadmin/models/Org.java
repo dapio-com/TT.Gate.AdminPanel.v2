@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Orgs {
+public class Org {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +15,10 @@ public class Orgs {
     private String org_name;
     private String org_owner;
 
-    public Orgs() {
+    public Org() {
     }
 
-    public Orgs(String org_name, String org_owner){
+    public Org(String org_name, String org_owner){
         this.org_name = org_name;
         this.org_owner = org_owner;
     }

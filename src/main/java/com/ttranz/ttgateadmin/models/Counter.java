@@ -1,18 +1,34 @@
-package com.ttranz.ttgateadmin.dto;
+package com.ttranz.ttgateadmin.models;
 
-public class DtoCounters {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class Counter {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int total_orgs;
     private int total_terminals;
     private int total_operations;
 
-    public DtoCounters(Long id, int total_operations, int total_orgs, int total_terminals) {
-        this.id = id;
-        this.total_orgs = total_orgs;
-        this.total_terminals = total_terminals;
-        this.total_operations = total_operations;
+
+    public Counter() {
     }
+
+//    public Counters(Long id, int total_operations, int total_orgs, int total_terminals){
+//        this.id = id;
+//        this.total_operations = total_operations;
+//        this.total_orgs = total_orgs;
+//        this.total_terminals = total_terminals;
+//    }
+
+
+
 
     public Long getId() {
         return id;

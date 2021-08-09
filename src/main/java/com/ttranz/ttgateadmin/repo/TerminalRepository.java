@@ -1,15 +1,15 @@
 package com.ttranz.ttgateadmin.repo;
 
 
-import com.ttranz.ttgateadmin.dto.DtoTerminals;
-import com.ttranz.ttgateadmin.models.Terminals;
+import com.ttranz.ttgateadmin.dto.DtoTerminal;
+import com.ttranz.ttgateadmin.models.Terminal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface TerminalRepository extends CrudRepository<Terminals, Long> {
+public interface TerminalRepository extends CrudRepository<Terminal, Long> {
 
 //
 //    SELECT terminal.terminal_id, org.org_name, terminal.terminal_org_id as org_id, terminal.terminal_tid as tid, terminals.terminal_tsp, terminal.terminal_status " +
@@ -26,9 +26,9 @@ public interface TerminalRepository extends CrudRepository<Terminals, Long> {
             "FROM " +
             "terminal, org " +
             "WHERE org.id = terminal.terminal_org_id ORDER BY terminal.id DESC LIMIT 8", nativeQuery = true)
-    Iterable<Terminals> selectLastN();
+    Iterable<Terminal> selectLastN();
 
-    @Query("SELECT new com.ttranz.ttgateadmin.dto.DtoTerminals(" +
+    @Query("SELECT new com.ttranz.ttgateadmin.dto.DtoTerminal(" +
             "t.id," +
             "o.org_name," +
             "t.terminal_org_id," +
@@ -36,8 +36,8 @@ public interface TerminalRepository extends CrudRepository<Terminals, Long> {
             "t.terminal_tsp," +
             "t.terminal_status" +
             ") " +
-            "FROM Terminals t LEFT JOIN Orgs o ON(o.id = t.terminal_org_id)")
-    Page<DtoTerminals> selectIntoDtoTerminal(Pageable pageable);
+            "FROM Terminal t LEFT JOIN Org o ON(o.id = t.terminal_org_id)")
+    Page<DtoTerminal> selectIntoDtoTerminal(Pageable pageable);
 
 
 
@@ -50,7 +50,7 @@ public interface TerminalRepository extends CrudRepository<Terminals, Long> {
 //    @Query (value = "SELECT * FROM org WHERE UPPER(terminal_tid) LIKE UPPER(concat('%', :tid,'%'))", nativeQuery = true)
 //    Iterable<Terminal> searchForTerminal(@Param("tid") String tid);
 
-    @Query("SELECT new com.ttranz.ttgateadmin.dto.DtoTerminals(" +
+    @Query("SELECT new com.ttranz.ttgateadmin.dto.DtoTerminal(" +
             "t.id," +
             "o.org_name," +
             "t.terminal_org_id," +
@@ -58,7 +58,7 @@ public interface TerminalRepository extends CrudRepository<Terminals, Long> {
             "t.terminal_tsp," +
             "t.terminal_status" +
             ") " +
-            "FROM Terminals t LEFT JOIN Orgs o ON(o.id = t.terminal_org_id) " +
+            "FROM Terminal t LEFT JOIN Org o ON(o.id = t.terminal_org_id) " +
             "WHERE UPPER(t.terminal_tid) LIKE UPPER(concat('%', :tid,'%'))")
-    Page<DtoTerminals> searchForTerminal(Pageable pageable, @Param("tid") String tid);
+    Page<DtoTerminal> searchForTerminal(Pageable pageable, @Param("tid") String tid);
 }

@@ -1,29 +1,18 @@
-package com.ttranz.ttgateadmin.models;
+package com.ttranz.ttgateadmin.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class DtoTerminal {
 
-@Entity
-public class Terminals {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String org_name;
     private Long terminal_org_id;
-
-    //private String org_name;
-
     private String terminal_tid;
     private String terminal_tsp;
     private int terminal_status;
 
-    public Terminals() {
-    }
 
-    public Terminals(Long terminal_org_id, String terminal_tid, String terminal_tsp, int terminal_status) {
+    public DtoTerminal(Long id, String org_name, Long terminal_org_id, String terminal_tid, String terminal_tsp, int terminal_status) {
+        this.id = id;
+        this.org_name = org_name;
         this.terminal_org_id = terminal_org_id;
         this.terminal_tid = terminal_tid;
         this.terminal_tsp = terminal_tsp;
@@ -38,15 +27,17 @@ public class Terminals {
         this.id = id;
     }
 
+    public String getOrg_name() {
+        return org_name;
+    }
+
+    public void setOrg_name(String org_name) {
+        this.org_name = org_name;
+    }
+
     public Long getTerminal_org_id() {
         return terminal_org_id;
     }
-
-//    public String getOrg_name() {
-//        return org_name;
-//    }
-//
-//    public void setOrg_name() { this.org_name = org_name;}
 
     public void setTerminal_org_id(Long terminal_org_id) {
         this.terminal_org_id = terminal_org_id;
