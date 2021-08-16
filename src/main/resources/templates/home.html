@@ -36,7 +36,7 @@
 
 </head>
 
-<body onload="getCounters()">
+<body onload="getCounters(); getErrors()">
 
 <div id="wrapper">
 
@@ -284,7 +284,7 @@
                         <a onclick="getTerminalPanel()"><i class="fa fa-mobile fa-fw"></i> Терминалы</a>
                     </li>
                     <li>
-                        <a ><i class="fa fa-dashboard fa-fw"></i> Операции</a>
+                        <a onclick="getOperationPanel()"><i class="fa fa-list fa-fw"></i> Операции</a>
                     </li>
                     <li>
                         <a ><i class="fa fa-bar-chart-o fa-fw"></i> Графики</a>
@@ -336,6 +336,7 @@
 <script src="js/main_func.js"></script>
 <script src="js/org_func.js"></script>
 <script src="js/terminal_func.js"></script>
+<script src="js/operation_func.js"></script>
 
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

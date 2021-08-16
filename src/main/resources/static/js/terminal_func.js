@@ -35,8 +35,8 @@ function terminalAddCheck() {
         },
         success: function (text) {
             if(text.trim() === 'true'){
-                cleanTerminalForm();
                 alert ("Терминал " + terminal_tid + " уже существует");
+                $("#terminal_tid").val("");
             } else {
                 terminalAdd(terminal_org_id, terminal_tid, terminal_tsp);
                 cleanTerminalForm();
@@ -86,3 +86,109 @@ function terminalShowAll() {
 
 
 }
+
+function getTerminalEditForm(id){
+    $.ajax({
+        type: "GET",
+        url: "/terminal-edit-form",
+        cache: false,
+        data: {
+            id: id
+        },
+        success: function (text) {
+            $("#terminal_form").html(text);
+        }
+    })
+}
+
+function terminalEdit(id) {
+
+    var terminal_org_name = $("#terminal_org_name").val();
+    var terminal_org_id = $("#terminal_org_id").val();
+    var terminal_tid = $("#terminal_tid").val().trim();
+    var terminal_tsp = $("#terminal_tsp").val().trim();
+    var terminal_status = $("#terminal_status").val();
+
+    console.log(terminal_org_name);
+    console.log(terminal_org_id);
+    console.log(terminal_tid);
+    if (terminal_tid.length > 0 && terminal_org_name.length > 0){
+        console.log("in AJAX");
+        $.ajax({
+            type: "POST",
+            url: "/terminal-edit",
+            cache: false,
+            data: {
+                terminal_org_id: terminal_org_id,
+                id: id,
+                terminal_tid: terminal_tid,
+                terminal_tsp: terminal_tsp,
+                terminal_status: terminal_status
+            },
+            success: function (text) {
+                if(text === "ok"){
+                    cleanTerminalForm();
+                    getTerminalPanel();
+                }
+            }
+        });
+    } else {
+        alert ("Введите Наименование Организации\nили\n! TID Терминала !");
+    }
+    //cleanFormOrgAdd();
+}
+
+function terminalStatus() {
+
+    var terminalStatus = $("#terminal_status").val();
+
+    if(terminalStatus === "1"){
+        $("#terminal_status").val("0");
+        $("#terminal_status_btn").html("ВЫКЛ.");
+        $("#terminal_status_btn").css('background-color', '#f0ad4e');
+    } else {
+        $("#terminal_status").val("1");
+        $("#terminal_status_btn").html("ВКЛ.");
+        $("#terminal_status_btn").css('background-color', '#5cb85c');
+
+
+    }
+
+}
+
+function terminalDelete(id) {
+
+    if(confirm("Вы действиельно хотите\nудалить запись об этом\nтерминале ?")){
+        $.ajax({
+            type: "POST",
+            url: "/terminal-delete",
+            cache: false,
+            data: {
+                id: id
+            },
+            success: function (text) {
+                if(text === "ok"){
+                    cleanTerminalForm();
+                    getTerminalPanel();
+                }
+            }
+        });
+    }
+
+}
+
+function terminalShowAll() {
+
+    $.ajax({
+        type: "GET",
+        url: "/terminal-show-all",
+        cache: false,
+        success: function (text) {
+            $("#terminal-panel-body").html(text);
+        }
+    });
+
+
+}
+
+

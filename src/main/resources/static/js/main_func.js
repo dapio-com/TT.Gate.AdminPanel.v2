@@ -32,4 +32,17 @@ function getCounters() {
 
 }
 
+function getErrors(){
+
+        $.ajax({
+            url: "/get-errors",
+            type: "GET",
+            success: function (text) {
+                $("#error-panel-body").html(text);
+            }
+        });
+
+}
+
+
 

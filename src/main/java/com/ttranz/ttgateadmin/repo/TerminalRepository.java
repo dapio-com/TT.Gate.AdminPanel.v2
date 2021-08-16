@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface TerminalRepository extends CrudRepository<Terminal, Long> {
 
 //
@@ -44,7 +46,7 @@ public interface TerminalRepository extends CrudRepository<Terminal, Long> {
 
 
 
-    @Query(value = "SELECT CASE WHEN (COUNT(terminal_tid) > 0)  THEN true ELSE false END FROM terminal WHERE terminal_tid = :tid", nativeQuery = true)
+    @Query(value = "SELECT CASE WHEN (COUNT(terminal_tid) > 0) THEN true ELSE false END FROM terminal WHERE terminal_tid = :tid", nativeQuery = true)
     boolean selectTerminalTIDCheck(@Param("tid") String tid);
 
 //    @Query (value = "SELECT * FROM org WHERE UPPER(terminal_tid) LIKE UPPER(concat('%', :tid,'%'))", nativeQuery = true)
@@ -61,4 +63,18 @@ public interface TerminalRepository extends CrudRepository<Terminal, Long> {
             "FROM Terminal t LEFT JOIN Org o ON(o.id = t.terminal_org_id) " +
             "WHERE UPPER(t.terminal_tid) LIKE UPPER(concat('%', :tid,'%'))")
     Page<DtoTerminal> searchForTerminal(Pageable pageable, @Param("tid") String tid);
+
+
+
+    @Query("SELECT new com.ttranz.ttgateadmin.dto.DtoTerminal(" +
+            "t.id," +
+            "o.org_name," +
+            "t.terminal_org_id," +
+            "t.terminal_tid," +
+            "t.terminal_tsp," +
+            "t.terminal_status" +
+            ") " +
+            "FROM Terminal t LEFT JOIN Org o ON(o.id = t.terminal_org_id) " +
+            "WHERE t.id = :id")
+    List<DtoTerminal> searchTerminalForEdit(@Param("id") Long id);
 }

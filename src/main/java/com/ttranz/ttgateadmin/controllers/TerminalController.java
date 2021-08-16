@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 @Controller
 public class TerminalController {
@@ -52,18 +51,17 @@ public class TerminalController {
 
         Page<DtoTerminal> page = terminalRepository.selectIntoDtoTerminal(pageable);
         model.addAttribute("page", page);
-        return "results/terminals-added";
+        return "results/terminals_added";
     }
 
     @GetMapping("/terminal-edit-form")
-    public String getTerminalEditForm(long id, Model model){
+    public String getTerminalEditForm(Long id, Model model){
         if(!terminalRepository.existsById(id)){
             return "/";
         }
-        Optional<Terminal> terminal = terminalRepository.findById(id);
-        ArrayList<Terminal> result = new ArrayList<>();
-        terminal.ifPresent(result::add);
-        model.addAttribute("terminal", result);
+        List<DtoTerminal> terminal = terminalRepository.searchTerminalForEdit(id);
+        model.addAttribute("terminal", terminal);
+
         return "blocks/terminal_edit_form_block";
     }
 
@@ -92,7 +90,7 @@ public class TerminalController {
     public String terminalSearch(@PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC, size = 7) Pageable pageable, @RequestParam String searchFor, Model model) {
         Page<DtoTerminal> page = terminalRepository.searchForTerminal(pageable, searchFor);
         model.addAttribute("page", page);
-        return "results/terminals-added";
+        return "results/terminals_added";
 
     }
 
@@ -101,7 +99,7 @@ public class TerminalController {
 
         Page<DtoTerminal> page = terminalRepository.selectIntoDtoTerminal(pageable);
         model.addAttribute("page", page);
-        return "results/terminals-added";
+        return "results/terminals_added";
 
     }
 

@@ -10,7 +10,7 @@
 
     <!-- WIDGETS -->
     <div class="row" id="widgets">
-        <div class="col-lg-6 col-md-6" id="org_form">
+        <div class="col-lg-6 col-md-6" id="terminal_form">
             <div style="margin-bottom:20px">
                 <h4>Добавить терминал</h4>
                 <form>
@@ -31,7 +31,7 @@
                             });
 
 
-                        })
+                        });
 
                         $('#terminal_org_name').on('autocomplete.input', function (evt, item) {
                             //console.log(item);
@@ -112,7 +112,7 @@
                     $('#terminal_search').keyup(function () {
                         var searchFor = $('#terminal_search').val().trim();
                         window.clearTimeout(timer);
-                        if (searchFor.length > 4) {
+                        if (searchFor.length > 3) {
                             //alert(searchFor);
                             //loading_show();
                             timer = setTimeout(function () {
@@ -157,7 +157,7 @@
 
                 <div class="panel-body" id="terminal-panel-body" style="max-height: 350px; overflow-y: auto">
 
-                    <div class="table-responsive" th:replace="results/terminals-added :: terminals_added"></div>
+                    <div class="table-responsive" th:replace="results/terminals_added :: terminals_added"></div>
 
                 </div>
             </div>

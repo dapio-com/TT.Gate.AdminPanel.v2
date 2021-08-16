@@ -17,7 +17,7 @@ public interface CounterRepository extends CrudRepository<Counter, Long> {
 //            "FROM Counters c")
 //    List<DtoCounters> selectCounters();
 
-    @Query(value = "SELECT id, total_operations, total_orgs, total_terminals FROM counters", nativeQuery = true)
+    @Query(value = "SELECT id, total_operations, total_orgs, total_terminals FROM counter", nativeQuery = true)
     List<Counter> selectCounters();
 
 }

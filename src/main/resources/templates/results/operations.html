@@ -1,0 +1,28 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="operations" class="table-responsive">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Дата/Время</th>
+            <th>ТСП</th>
+            <th>Терминал</th>
+            <th>Карта</th>
+            <th>Код авт.</th>
+            <th>RRN</th>
+            <th>Сумма</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${operations}">
+            <td th:text="${el.op_date_time}"></td>
+            <td th:text="${el.op_tsp}"></td>
+            <td th:text="${el.op_tid}"></td>
+            <td th:text="${el.op_card_num}"></td>
+            <td th:text="${el.op_auth_code}"></td>
+            <td th:text="${el.op_rrn}"></td>
+            <td th:text="${el.op_amount}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

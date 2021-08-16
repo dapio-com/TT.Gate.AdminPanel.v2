@@ -49,7 +49,7 @@ public class OrgController {
 
         Iterable<Org> orgs = orgRepository.selectLastN();
         model.addAttribute("orgs", orgs);
-        return "results/orgs-added";
+        return "results/orgs_added";
     }
 
     @GetMapping("/org-edit-form")
@@ -88,7 +88,7 @@ public class OrgController {
         Iterable<Org> orgs = orgRepository.searchForOrg(searchFor);
         model.addAttribute("orgs", orgs);
 
-        return "results/orgs-added";
+        return "results/orgs_added";
 
     }
 
@@ -105,7 +105,7 @@ public class OrgController {
         Iterable<Org> orgs = orgRepository.findAll();
         model.addAttribute("orgs", orgs);
 
-        return "results/orgs-added";
+        return "results/orgs_added";
 
     }
 

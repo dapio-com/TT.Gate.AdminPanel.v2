@@ -1,0 +1,24 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="error_panel" class="table-responsive">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Дата/Время</th>
+            <th>IP-адрес</th>
+            <th>Терминал</th>
+            <th>ТСП</th>
+            <th>Ошибка</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${errors}">
+            <td th:text="${el.error_date_time}"></td>
+            <td th:text="${el.error_ip}"></td>
+            <td th:text="${el.error_tid}"></td>
+            <td th:text="${el.error_tsp}"></td>
+            <td th:text="${el.error_text}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
