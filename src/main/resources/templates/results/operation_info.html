@@ -1,0 +1,38 @@
+
+<div xmlns:th="http://www.thymeleaf.org" class="table-responsive">
+    <div class="fa fa-close fw-bold close" onclick="closeOpInfo()"></div>
+    <table class="table table-hover">
+        <tbody th:each="el : ${operation}">
+        <tr><td style="text-align: right">Дата/Время : </td><td th:text="${el.op_date_time}"></td></tr>
+        <tr><td style="text-align: right">IP-Адрес : </td><td th:text="${el.op_ip}"></td></tr>
+        <tr><td style="text-align: right">Терминал : </td><td th:text="${el.op_tid}"></td></tr>
+        <tr><td style="text-align: right">ТСП : </td><td th:text="${el.op_tsp}"></td></tr>
+        <tr><td style="text-align: right">Карта : </td><td th:text="${el.op_card_num}"></td></tr>
+        <tr><td style="text-align: right">STAN : </td><td th:text="${el.op_stan}"></td></tr>
+        <tr><td style="text-align: right">Авт-ция : </td><td th:text="${el.op_auth_code}"></td></tr>
+        <tr><td style="text-align: right">RRN : </td><td th:text="${el.op_rrn}"></td></tr>
+        <tr><td style="text-align: right">Статус : </td><td th:switch="${el.op_status}">
+                                    <span th:case="1">ОПЛАЧЕНО</span>
+                                    <span th:case="0">ОТМЕНЕНО</span>
+                              </td></tr>
+        <tr><td style="text-align: right;" class="huge">Сумма : </td><td th:text="${el.op_amount}" class="huge"></td></tr>
+        <tr><td style="text-align: right">Доп. инфо : </td><td>
+                                    <span th:text="${el.op_xadd01}"></span><br>
+                                    <span th:text="${el.op_xadd02}"></span><br>
+                                    <span th:text="${el.op_xadd03}"></span><br>
+                                    <span th:text="${el.op_xadd04}"></span><br>
+                                    <span th:text="${el.op_xadd05}"></span><br>
+                                    <span th:text="${el.op_xadd06}"></span><br>
+                                    <span th:text="${el.op_xadd07}"></span><br>
+                                    <span th:text="${el.op_xadd08}"></span><br>
+                                    <span th:text="${el.op_xadd09}"></span><br>
+                                    <span th:text="${el.op_xadd10}"></span><br>
+
+                              </td></tr>
+
+
+
+        </tbody>
+    </table>
+
+</div>

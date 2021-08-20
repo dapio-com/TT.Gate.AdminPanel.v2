@@ -8,15 +8,92 @@
         </div>
     </div>
 
+    <style>
 
-    <div class="row col-lg-4 col-md-4" style="margin-bottom: 20px">
+        .hidden {
+            display: none !important;
+        }
+
+        .menu_mobile {
+            position: fixed;
+            display: block;
+            width: 25%;
+            height: 75%;
+            right: -110%;
+            top: 70px;
+            padding: 30px;
+            z-index: 50;
+            background: #eee;
+            animation-name: menuClose;
+            animation-duration: 2s;
+        }
+
+        .menu_mobile.active {
+            right: 0;
+            animation-name: menuOpen;
+            animation-duration: 1s;
+        }
+
+        .menu_mobile.active .close-menu {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            right: 70px;
+            width: 60px;
+            height: 60px;
+            background-color: #eeeeee;
+            font-size: 20px;
+            text-align: center;
+            line-height: 60px;
+            cursor: pointer;
+        }
+
+        @keyframes menuOpen {
+            from {
+                right: -110%;
+            }
+            to {
+                right: 0;
+            }
+        }
+
+        @keyframes menuClose {
+            from {
+                right: 0;
+            }
+            to {
+                right: -110%;
+            }
+        }
+
+
+
+    </style>
+    <script>
+
+        // $("#push").on('click', function() {
+        //     $('.menu_mobile').removeClass('hidden').addClass('active');
+        // });
+
+        // $('.close').on('click', function() {
+        //     $('.menu_mobile').removeClass('active');
+        //     $('.menu_mobile').html("");
+        // });
+    </script>
+<!--    <button id="push">меню</button>-->
+    <div class="menu_mobile hidden">
+        TEST !
+<!--        <button class="close-menu">x</button>-->
+    </div>
+
+    <div class="row col-lg-6 col-md-6" style="margin-bottom: 20px">
         <form class="form-inline">
 
             <script> // SEARCH SCRIPT
             $(document).ready(function () {
                 var timer;
-                $('#operation_search').keyup(function(){
-                    var searchFor = $('#operation_search').val().trim();
+                $('#op_org_id_select').keyup(function(){
+                    var searchFor = $('#op_org_id_select').val().trim();
                     window.clearTimeout(timer);
                     if (searchFor.length > 2) {
                         //alert(searchFor);
@@ -39,7 +116,12 @@
                 });
             });
             </script>
-            <input type="text" class="form-control" placeholder="поиск..." id="operation_search">
+
+            <input type="text" class="form-control" placeholder="поиск орг..." id="op_org_id_select">
+            <input type="date" class="form-control" placeholder="дата начала" id="date_from"> -
+            <input type="date" class="form-control" placeholder="дата окончания" id="date_to">
+            <span class="fa fa-file-excel-o fa-fw"></span>
+            <button type="button" class="btn btn-success" onclick="">выгрузить</button>
             <button type="button" class="btn btn-success" onclick="operationShowAll()">все</button>
             <!--                             <span class="input-group-btn">-->
             <!--                                <button class="btn btn-success" type="button">все</button>-->
@@ -58,7 +140,7 @@
                     <i class="fa fa-list-alt fa-fw"></i>
                 </div>
 
-                <div class="panel-body" id="operation-panel-body">
+                <div class="panel-body" id="operation-panel-body" style="max-height: 550px; overflow-y: auto">
 
                     <div class="table-responsive" th:replace="results/operations :: operations"></div>
 

@@ -36,7 +36,7 @@
 
 </head>
 
-<body onload="getCounters(); getErrors()">
+<body onload="getCounters(); getErrors(); getOperationsPerMinute(); setInterval(function () { getCounters(); getErrors(); getOperationsPerMinute()}, 30000);">
 
 <div id="wrapper">
 
@@ -278,10 +278,10 @@
                         <a ><i class="fa fa-dashboard fa-fw"></i> Группы организаций</a>
                     </li>
                     <li>
-                        <a onclick="getOrgPanel()"><i class="fa fa-building fa-fw"></i> Организации</a>
+                        <a onclick="getOrgPanel()"><i class="fa fa-institution fa-fw"></i> Организации</a>
                     </li>
                     <li>
-                        <a onclick="getTerminalPanel()"><i class="fa fa-mobile fa-fw"></i> Терминалы</a>
+                        <a onclick="getTerminalPanel()"><i class="fa fa-tablet fa-fw"></i> Терминалы</a>
                     </li>
                     <li>
                         <a onclick="getOperationPanel()"><i class="fa fa-list fa-fw"></i> Операции</a>

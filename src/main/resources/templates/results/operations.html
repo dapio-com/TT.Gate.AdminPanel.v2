@@ -1,5 +1,26 @@
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="operations" class="table-responsive">
 
+<!--    <script>-->
+
+<!--        function opShowInfo(id) {-->
+
+<!--            $.ajax({-->
+<!--                type: "GET",-->
+<!--                url: "/op_show-info",-->
+<!--                cache: false,-->
+<!--                data: {-->
+<!--                    id: id-->
+<!--                },-->
+<!--                success: function (text) {-->
+<!--                    $("#org-panel-body").html(text);-->
+<!--                }-->
+<!--            });-->
+
+<!--            $('.menu_mobile').removeClass('hidden').addClass('active');-->
+<!--        }-->
+
+
+<!--    </script>-->
     <table class="table table-hover">
         <thead>
         <tr>
@@ -7,19 +28,15 @@
             <th>ТСП</th>
             <th>Терминал</th>
             <th>Карта</th>
-            <th>Код авт.</th>
-            <th>RRN</th>
             <th>Сумма</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="el : ${operations}">
+        <tr th:each="el : ${operations}" th:id="${el.id}" onclick="opShowInfo(this.id)">
             <td th:text="${el.op_date_time}"></td>
             <td th:text="${el.op_tsp}"></td>
             <td th:text="${el.op_tid}"></td>
             <td th:text="${el.op_card_num}"></td>
-            <td th:text="${el.op_auth_code}"></td>
-            <td th:text="${el.op_rrn}"></td>
             <td th:text="${el.op_amount}"></td>
         </tr>
         </tbody>

@@ -2,6 +2,7 @@ package com.ttranz.ttgateadmin.models;
 
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -23,7 +24,7 @@ public class Operation {
     private String op_rrn;
     private String op_auth_code;
     private String op_card_num;
-    private float op_amount;
+    private BigDecimal op_amount;
     private String op_bill_name;
     private String op_xadd01;
     private String op_xadd02;
@@ -41,7 +42,7 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(Long id, Date op_date_time, int op_org_id, String op_tsp, String op_ip, String op_tid, String op_mti, String op_stan, String op_rrn, String op_auth_code, String op_card_num, float op_amount, String op_bill_name, String op_xadd01, String op_xadd02, String op_xadd03, String op_xadd04, String op_xadd05, String op_xadd06, String op_xadd07, String op_xadd08, String op_xadd09, String op_xadd10, int op_status) {
+    public Operation(Long id, Date op_date_time, int op_org_id, String op_tsp, String op_ip, String op_tid, String op_mti, String op_stan, String op_rrn, String op_auth_code, String op_card_num, BigDecimal op_amount, String op_bill_name, String op_xadd01, String op_xadd02, String op_xadd03, String op_xadd04, String op_xadd05, String op_xadd06, String op_xadd07, String op_xadd08, String op_xadd09, String op_xadd10, int op_status) {
         this.id = id;
         this.op_date_time = op_date_time;
         this.op_org_id = op_org_id;
@@ -156,11 +157,11 @@ public class Operation {
         this.op_card_num = op_card_num;
     }
 
-    public double getOp_amount() {
+    public BigDecimal getOp_amount() {
         return op_amount;
     }
 
-    public void setOp_amount(float op_amount) {
+    public void setOp_amount(BigDecimal op_amount) {
         this.op_amount = op_amount;
     }
 

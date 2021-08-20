@@ -15,7 +15,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-comments fa-5x"></i>
+                            <i class="fa fa-institution fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge" id="total-orgs">--</div>
@@ -37,7 +37,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-tasks fa-5x"></i>
+                            <i class="fa fa-tablet fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge" id="total-terminals">--</div>
@@ -59,7 +59,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-shopping-cart fa-5x"></i>
+                            <i class="fa fa-exchange  fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge" id="total-operations">--</div>
@@ -81,10 +81,10 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-support fa-5x"></i>
+                            <i class="fa fa-clock-o fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge" id="operations-in-min">--</div>
+                            <div class="huge" id="operations-per-minute">--</div>
                             <div>Операций в минуту</div>
                         </div>
                     </div>
@@ -124,17 +124,28 @@
 
     </div>
 
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+            getCounters();
+            getErrors();
+            getOperationsPerMinute();
+
+        });
+    </script>
+<!--        setInterval(function () {-->
+<!--            getCounters();-->
+<!--            getErrors();-->
+<!--            getOperationsPerMinute();-->
+<!--        }, 30000);-->
+
+<!--    </script>-->
+
+
 </div>
 
 
-<script>
-
-    getCounters();
-    getErrors();
-
-    setInterval(function () {
-        getCounters();
-        getErrors();
-    }, 30000);
-
-</script>
