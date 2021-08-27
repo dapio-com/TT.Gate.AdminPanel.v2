@@ -1,27 +1,7 @@
-<div xmlns:th="http://www.thymeleaf.org" th:fragment="operations" class="table-responsive">
+<!--<div xmlns:th="http://www.thymeleaf.org" th:fragment="operations" class="table-responsive">-->
+<!--<div xmlns:th="http://www.thymeleaf.org" class="table-responsive">-->
 
-<!--    <script>-->
-
-<!--        function opShowInfo(id) {-->
-
-<!--            $.ajax({-->
-<!--                type: "GET",-->
-<!--                url: "/op_show-info",-->
-<!--                cache: false,-->
-<!--                data: {-->
-<!--                    id: id-->
-<!--                },-->
-<!--                success: function (text) {-->
-<!--                    $("#org-panel-body").html(text);-->
-<!--                }-->
-<!--            });-->
-
-<!--            $('.menu_mobile').removeClass('hidden').addClass('active');-->
-<!--        }-->
-
-
-<!--    </script>-->
-    <table class="table table-hover">
+    <table class="table table-hover" xmlns:th="http://www.thymeleaf.org">
         <thead>
         <tr>
             <th>Дата/Время</th>
@@ -32,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="el : ${operations}" th:id="${el.id}" onclick="opShowInfo(this.id)">
+        <tr th:each="el : ${operations}" th:class="${el.op_status == 0} ? 'danger'" th:id="${el.id}" onclick="opShowInfo(this.id)">
             <td th:text="${el.op_date_time}"></td>
             <td th:text="${el.op_tsp}"></td>
             <td th:text="${el.op_tid}"></td>
@@ -42,4 +22,4 @@
         </tbody>
     </table>
 
-</div>
+<!--</div>-->

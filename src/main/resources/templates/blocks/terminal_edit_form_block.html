@@ -1,4 +1,4 @@
-<div xmlns:th="http://www.thymeleaf.org" th:fragment="terminal_edit_form_block" style="margin-bottom:20px" >
+<div xmlns:th="http://www.thymeleaf.org" style="margin-bottom:20px" >
     <h4>Редактировать терминал</h4>
     <form th:each="el : ${terminal}">
         <script>
@@ -17,7 +17,7 @@
                 });
 
 
-            })
+            });
 
             $('#terminal_org_name').on('autocomplete.input', function (evt, item) {
                 //console.log(item);
@@ -70,17 +70,8 @@
 
         <input type="text" th:value="${el.org_name}" name="terminal_org_name" id="terminal_org_name" class="form-control"/><br>
         <input type="hidden" name="terminal_org_id" id="terminal_org_id" th:value="${el.terminal_org_id}" />
-<!--        <div class="form-row">-->
-<!--            <div class="form-group col-md-8">-->
-<!--                <input type="text" th:value="${el.terminal_tid}" name="terminal_tid" id="terminal_tid"  class="form-control"/>-->
-<!--            </div>-->
-<!--            <div class="form-group col-md-4">-->
-<!--                <input class="form-check-input" type="checkbox" id="status">-->
-<!--                <label class="form-check-label" for="status">-->
-<!--                    ВКЛ.-->
-<!--                </label>-->
-<!--            </div>-->
-<!--        </div>-->
+
+
         <div class="input-group">
             <input type="text" th:value="${el.terminal_tid}" name="terminal_tid" id="terminal_tid"  class="form-control"/>
             <input type="hidden" name="terminal_status" id="terminal_status" th:value="${el.terminal_status}">

@@ -1,8 +1,8 @@
-<div xmlns:th="http://www.thymeleaf.org" th:fragment="org_edit_form_block" style="margin-bottom:20px" >
+<div xmlns:th="http://www.thymeleaf.org" style="margin-bottom:20px" >
     <h4>Редактировать организацию</h4>
     <form th:each="el : ${org}">
-        <input type="text" th:value="${el.org_name}" name="org_name" id="org_name" class="form-control"/><br>
-        <input type="text" th:value="${el.org_owner}" name="org_owner" id="org_owner"  class="form-control"/><br>
+        <input type="text" th:value="${el.org_name}" name="org_name" id="org_name" placeholder="введите название организации" class="form-control"/><br>
+        <input type="text" th:value="${el.org_owner}" name="org_owner" id="org_owner" placeholder="собственник" class="form-control"/><br>
         <button type="button" class="btn btn-success" th:id="${el.id}" onclick="orgEdit(this.id)">обновить</button>
     </form>
 </div>

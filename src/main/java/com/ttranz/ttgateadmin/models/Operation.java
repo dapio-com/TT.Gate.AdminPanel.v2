@@ -15,7 +15,7 @@ public class Operation {
     @Temporal(TemporalType.TIMESTAMP)
     private Date op_date_time;
 
-    private int op_org_id;
+    private Long op_org_id;
     private String op_tsp;
     private String op_ip;
     private String op_tid;
@@ -42,7 +42,7 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(Long id, Date op_date_time, int op_org_id, String op_tsp, String op_ip, String op_tid, String op_mti, String op_stan, String op_rrn, String op_auth_code, String op_card_num, BigDecimal op_amount, String op_bill_name, String op_xadd01, String op_xadd02, String op_xadd03, String op_xadd04, String op_xadd05, String op_xadd06, String op_xadd07, String op_xadd08, String op_xadd09, String op_xadd10, int op_status) {
+    public Operation(Long id, Date op_date_time, Long op_org_id, String op_tsp, String op_ip, String op_tid, String op_mti, String op_stan, String op_rrn, String op_auth_code, String op_card_num, BigDecimal op_amount, String op_bill_name, String op_xadd01, String op_xadd02, String op_xadd03, String op_xadd04, String op_xadd05, String op_xadd06, String op_xadd07, String op_xadd08, String op_xadd09, String op_xadd10, int op_status) {
         this.id = id;
         this.op_date_time = op_date_time;
         this.op_org_id = op_org_id;
@@ -81,15 +81,15 @@ public class Operation {
         return op_date_time;
     }
 
-    public void setOp_date_time(Date op_timestamp) {
-        this.op_date_time = op_timestamp;
+    public void setOp_date_time(Date op_date_time) {
+        this.op_date_time = op_date_time;
     }
 
-    public int getOp_org_id() {
+    public Long getOp_org_id() {
         return op_org_id;
     }
 
-    public void setOp_org_id(int op_org_id) {
+    public void setOp_org_id(Long op_org_id) {
         this.op_org_id = op_org_id;
     }
 

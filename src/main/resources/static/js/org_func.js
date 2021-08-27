@@ -133,7 +133,7 @@ function orgEdit(id) {
 function orgShowAll() {
 
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/org-show-all",
         cache: false,
         success: function (text) {

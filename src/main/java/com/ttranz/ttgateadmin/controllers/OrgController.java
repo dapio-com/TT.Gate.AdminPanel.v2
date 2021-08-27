@@ -100,7 +100,7 @@ public class OrgController {
 
     }
 
-    @PostMapping("/org-show-all")
+    @GetMapping("/org-show-all")
     public String orgShowAll(Model model) {
         Iterable<Org> orgs = orgRepository.findAll();
         model.addAttribute("orgs", orgs);
