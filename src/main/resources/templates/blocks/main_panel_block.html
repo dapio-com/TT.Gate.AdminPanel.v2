@@ -1,4 +1,4 @@
-<div th:fragment="main_panel_block" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="main_panel_block" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 
     <!-- PAGE TITLE -->
     <div class="row">
@@ -9,7 +9,7 @@
 
     <!-- WIDGETS -->
 
-    <div class="row" id="widgets">
+    <div class="row" id="widgets" sec:authorize="hasAuthority('ADMIN')">
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -18,14 +18,14 @@
                             <i class="fa fa-institution fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge" id="total-orgs">--</div>
+                            <div class="huge" id="total-orgs">0</div>
                             <div>Всего организаций</div>
                         </div>
                     </div>
                 </div>
-                <a href="/">
+                <a onclick="getOrgPanel()" class="dashboard_link" sec:authorize="hasAuthority('ADMIN')">
                     <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
+                        <span class="pull-left">перейти</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -40,14 +40,14 @@
                             <i class="fa fa-tablet fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge" id="total-terminals">--</div>
+                            <div class="huge" id="total-terminals">0</div>
                             <div>Всего терминалов</div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a onclick="getTerminalPanel()" class="dashboard_link" sec:authorize="hasAuthority('ADMIN')">
                     <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
+                        <span class="pull-left">перейти</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -59,17 +59,17 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-exchange  fa-5x"></i>
+                            <i class="fa fa-credit-card fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge" id="total-operations">--</div>
+                            <div class="huge" id="total-operations">0</div>
                             <div>Всего операций</div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a onclick="getOperationPanel()" class="dashboard_link" sec:authorize="hasAuthority('ADMIN')">
                     <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
+                        <span class="pull-left">перейти</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -84,14 +84,14 @@
                             <i class="fa fa-clock-o fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge" id="operations-per-minute">--</div>
+                            <div class="huge" id="operations-per-minute">0</div>
                             <div>Операций в минуту</div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a onclick="getOperationPanel()" class="dashboard_link" sec:authorize="hasAuthority('ADMIN')">
                     <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
+                        <span class="pull-left">перейти</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>

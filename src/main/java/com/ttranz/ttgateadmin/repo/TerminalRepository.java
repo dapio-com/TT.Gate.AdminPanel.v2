@@ -42,10 +42,6 @@ public interface TerminalRepository extends CrudRepository<Terminal, Long> {
     Page<DtoTerminal> selectIntoDtoTerminal(Pageable pageable);
 
 
-
-
-
-
     @Query(value = "SELECT CASE WHEN (COUNT(terminal_tid) > 0) THEN true ELSE false END FROM terminal WHERE terminal_tid = :tid", nativeQuery = true)
     boolean selectTerminalTIDCheck(@Param("tid") String tid);
 
@@ -77,4 +73,18 @@ public interface TerminalRepository extends CrudRepository<Terminal, Long> {
             "FROM Terminal t LEFT JOIN Org o ON(o.id = t.terminal_org_id) " +
             "WHERE t.id = :id")
     List<DtoTerminal> searchTerminalForEdit(@Param("id") Long id);
+
+
+
+    @Query(value = "SELECT COUNT(id) FROM terminal WHERE terminal_org_id = :id", nativeQuery = true)
+    int countTerminalsThatHaveOrgs(@Param("id") Long id);
+
+
+
+    @Query(value = "SELECT * FROM terminal WHERE terminal_org_id = :org_id ORDER BY terminal_tid", nativeQuery = true)
+    List<Terminal> selectTerminalsByOrgId(@Param("org_id") Long org_id);
+
+
+    Terminal findTerminalById(Long id);
+
 }

@@ -1,0 +1,21 @@
+
+
+    <table xmlns:th="http://www.thymeleaf.org" class="table table-hover">
+        <thead style="position: sticky; top: 0; background-color: #eeeeee;">
+        <tr>
+            <th>#</th>
+            <th>TID</th>
+            <th>Адрес установки / описание</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${terminals}" th:class="${el.terminal_status == 0} ? 'warning'">
+            <td th:text="${el.id}"></td>
+            <td th:text="${el.terminal_tid}"></td>
+            <td th:text="${el.terminal_tsp}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+

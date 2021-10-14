@@ -1,0 +1,39 @@
+<div xmlns:th="http://www.thymeleaf.org" style="margin-bottom:20px" >
+    <h4>Редактировать пользователя</h4>
+    <form >
+
+
+        <div class="input-group">
+            <input type="text" th:value="${user.userName}" name="username" id="username" placeholder="введите имя пользователя (логин)" class="form-control" autocomplete="off"/>
+            <input type="hidden" name="user_status" id="user_status" th:value="${user.userStatus}">
+            <span class="input-group-btn">
+                <button th:class="${user.userStatus == false} ? 'btn btn-warning' : 'btn btn-success'" th:text="${user.userStatus == false} ? 'ВЫКЛ.' : 'ВКЛ.'" type="button" id="user_status_btn" onclick="userStatus()"></button>
+            </span>
+        </div><br>
+        <div class="input-group">
+            <input type="password" name="password" id="password" placeholder="пароль" class="form-control"/>
+            <span class="input-group-btn">
+                <button class="btn btn-success" type="button" onclick="passwordGen()">сгенерить</button>
+            </span>
+        </div><br>
+<!--        <input type="text" th:value="${el.roles}" class="form-control" disabled="disabled"/><br>-->
+        <div class="col-lg-4" style="margin-left: -15px">
+            <input type="text" th:value="${user.roles}" class="form-control" disabled="disabled"/>
+        </div>
+        <div class="col-lg-offset-4" th:if="${user.userOrgGroupId > 0}">
+            <input type="text" th:value="${'ГР. ' + user.userOrgGroupName}" class="form-control" disabled="disabled"/><br>
+        </div>
+        <div class="col-lg-offset-4" th:if="${user.userOrgId > 0}">
+            <input type="text" th:value="${'ОРГ. ' + user.userOrgName}" class="form-control" disabled="disabled"/><br>
+        </div>
+        <div class="col-lg-offset-4" th:if="${user.userOrgId <= 0} AND ${user.userOrgGroupId <= 0}">
+            <input type="text" class="form-control" disabled="disabled"/><br>
+        </div>
+        <input type="text" th:value="${user.userDescription}" name="userdescription" id="userdescription" placeholder="описание" class="form-control"/><br>
+        <button type="button" class="btn btn-success" th:id="${user.id}" onclick="userEdit(this.id)"><span class="fa fa-save fa-fw"></span> обновить</button>
+        <button type="button" class="btn btn-success" onclick="getUserPanel()" style="margin-right: 20px"><span class="fa fa-times fa-fw"></span> отмена</button>
+
+    </form>
+
+
+</div>

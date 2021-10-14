@@ -12,13 +12,21 @@ public class Org {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long org_group_id;
+
     private String org_name;
     private String org_owner;
 
     public Org() {
     }
 
-    public Org(String org_name, String org_owner){
+//    public Org(String org_name, String org_owner){
+//        this.org_name = org_name;
+//        this.org_owner = org_owner;
+//    }
+
+    public Org(Long org_group_id, String org_name, String org_owner){
+        this.org_group_id = org_group_id;
         this.org_name = org_name;
         this.org_owner = org_owner;
     }
@@ -29,6 +37,14 @@ public class Org {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getOrg_group_id() {
+        return org_group_id;
+    }
+
+    public void setOrg_group_id(Long org_group_id) {
+        this.org_group_id = org_group_id;
     }
 
     public String getOrg_name() {

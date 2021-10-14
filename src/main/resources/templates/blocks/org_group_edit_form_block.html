@@ -1,0 +1,10 @@
+<div xmlns:th="http://www.thymeleaf.org" style="margin-bottom:20px" >
+    <h4>Редактировать группу</h4>
+    <form th:each="el : ${org_group}">
+        <input type="text" th:value="${el.org_group_name}" name="org_group_name" id="org_group_name" placeholder="введите название группы" class="form-control"/><br>
+        <input type="text" th:value="${el.org_group_description}" name="org_group_description" id="org_group_description" placeholder="описание группы" class="form-control"/><br>
+        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="orgGroupEdit(this.id)"><span class="fa fa-save fa-fw"></span> обновить</button>
+        <button type="button" class="btn btn-success" onclick="getOrgGroupPanel()" style="margin-right: 20px"><span class="fa fa-times fa-fw"></span> отмена</button>
+
+    </form>
+</div>

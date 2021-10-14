@@ -8,83 +8,59 @@
         </div>
     </div>
 
-    <style>
-
-        .hidden {
-            display: none !important;
-        }
-
-        .menu_mobile {
-            position: fixed;
-            display: block;
-            width: 25%;
-            height: 75%;
-            right: -110%;
-            top: 70px;
-            padding: 30px;
-            z-index: 50;
-            background: #eee;
-            animation-name: menuClose;
-            animation-duration: 2s;
-        }
-
-        .menu_mobile.active {
-            right: 0;
-            animation-name: menuOpen;
-            animation-duration: 1s;
-        }
-
-        .menu_mobile.active .close-menu {
-            position: absolute;
-            margin: auto;
-            top: 0;
-            right: 70px;
-            width: 60px;
-            height: 60px;
-            background-color: #eeeeee;
-            font-size: 20px;
-            text-align: center;
-            line-height: 60px;
-            cursor: pointer;
-        }
-
-        @keyframes menuOpen {
-            from {
-                right: -110%;
-            }
-            to {
-                right: 0;
-            }
-        }
-
-        @keyframes menuClose {
-            from {
-                right: 0;
-            }
-            to {
-                right: -110%;
-            }
-        }
-
-
-
-    </style>
-
-
     <div class="menu_mobile hidden"></div>
 
     <div class="row col-lg-12 col-md-12" style="margin-bottom: 20px">
-        <form class="form-inline">
 
-            <button type="button" class="btn btn-success" onclick="operationsFormReset()">сброс</button>
-            <input type="text" class="form-control" size="50" style="margin-right: 20px" placeholder="поиск орг..." id="org_name">
-            <input type="hidden" value="0" id="last_operations_for_org_id">
+        <button type="button" class="col-lg-1 btn btn-success" onclick="operationsFormReset()"><span class="fa fa-file fa-fw"></span> сброс</button>
+        <form class="col-lg-11 form-inline" style="margin-left: -10px">
 
-            <input type="text" id="reportrange" class="form-control" size="25" style="margin-right: 20px" placeholder="укажите диапазон">
-<!--            <input type="date" class="form-control" placeholder="дата начала" id="date_from"> - -->
-<!--            <input type="date" class="form-control" placeholder="дата окончания" id="date_to">-->
-            <button type="button" class="btn btn-success" onclick="getReport()">выгрузить</button>
-            <button type="button" class="btn btn-success" onclick="operationShowAll()">все</button>
+
+
+            <div th:if="${user.getUserOrgId() == 0} AND ${user.getUserOrgGroupId() == 0}" class="btn-group" role="group" style="margin-right: 20px">
+                <button type="button" class="btn btn-warning" id="org_btn" onclick="chartOrgGroupSelect(1)">ОРГ</button>
+                <button type="button" class="btn btn-default" id="org_group_btn" onclick="chartOrgGroupSelect(2)">ГР</button>
+            </div>
+
+<!--            <input th:type="${user.getUserOrgId() > 0} ? 'hidden' : 'text'" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск орг..." id="org_name">-->
+            <input th:if="${user.getUserOrgId() == 0}" type="text" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск орг..." id="org_name">
+            <input type="hidden" th:value="${user.getUserOrgId()}" id="org_id">
+
+            <input th:if="${user.getUserOrgGroupId() == 0} AND ${user.getUserOrgId() == 0}" type="hidden" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск гр..." id="org_group_name">
+            <input type="hidden" th:value="${user.getUserOrgGroupId()}" id="org_group_id">
+
+
+            <input type="text" id="reportrange" class="form-control link" size="25" style="margin-right: 20px">
+            <select name="time" id="time" class="form-control link time" style="margin-right: 20px">
+                <option value="">время</option>
+                <option value="01">01:00</option>
+                <option value="02">02:00</option>
+                <option value="03">03:00</option>
+                <option value="04">04:00</option>
+                <option value="05">05:00</option>
+                <option value="06">06:00</option>
+                <option value="07">07:00</option>
+                <option value="08">08:00</option>
+                <option value="09">09:00</option>
+                <option value="10">10:00</option>
+                <option value="11">11:00</option>
+                <option value="12">12:00</option>
+                <option value="13">13:00</option>
+                <option value="14">14:00</option>
+                <option value="15">15:00</option>
+                <option value="16">16:00</option>
+                <option value="17">17:00</option>
+                <option value="18">18:00</option>
+                <option value="19">19:00</option>
+                <option value="20">20:00</option>
+                <option value="21">21:00</option>
+                <option value="22">22:00</option>
+                <option value="23">23:00</option>
+            </select>
+            <input type="hidden" id="report_view" value="0">
+            <input type="hidden" id="report_creating_in_progress" value="0">
+            <button type="button" class="btn btn-success" id="report_view_btn"><span class="fa fa-list-alt fa-fw"></span> показать</button>
+            <button type="button" class="btn btn-success" id="get_report_btn"><span class="fa fa-file-excel-o fa-fw"></span> выгрузить</button>
 
         </form>
     </div>
@@ -95,27 +71,14 @@
     <script type="text/javascript">
         $(function() {
 
-
-
-
-
-
-
             var start = moment().subtract(0, 'days');
             var end = moment();
-
-
-
-
 
             moment.updateLocale('en', {
                 longDateFormat : {
                     L: "YYYY-MM-DD"
                 }
             });
-
-
-
 
 
             function cb(start, end) {
@@ -174,13 +137,13 @@
     <div class="row" id="contents">
 
         <!-- RIGHT PANEL OF CONTENTS -->
-        <div class="col-lg-12 col-md-6">
+        <div class="col-lg-12">
             <div class="panel panel-default" id="alert-panel">
                 <div class="panel-heading">
                     <i class="fa fa-list-alt fa-fw"></i>
                 </div>
 
-                <div class="panel-body" id="operation-panel-body" style="max-height: 550px; overflow-y: auto">
+                <div class="panel-body" id="operation-panel-body" style="max-height: 650px; overflow-y: auto; padding: 0 15px">
 
                 </div>
             </div>
@@ -192,14 +155,33 @@
 
     <script>
 
+        $(document).ready(function() {
+            $("#org_name").blur(function() {
+                if($("#org_name").val().length === 0){
+                    $("#org_id").val("0");
+
+                }
+                //alert($("#org_name").val().length);
+            });
+
+            $("#org_group_name").blur(function() {
+                if($("#org_group_name").val().length === 0){
+                    $("#org_group_id").val("0");
+
+                }
+                //alert($("#org_name").val().length);
+            });
+        });
+
+
         $(document).ready(function () {
             var resultData;
             $('#org_name').autocomplete({
 
                 source: function (query, result) {
-
+                    $("#loader").show();
                     $.ajax({
-                        url: "/org-autocomplete?query=" + query.term,
+                        url: "/org-autocomplete?query=" + query.term + "&orgGroupId=" + $('#org_group_id').val(),
                         dataType: "json",
                         type: "GET",
                         success: function (data) {
@@ -207,6 +189,8 @@
                             result($.map(data, function (item) {
                                 return item.org_name;
                             }));
+
+                            $("#loader").hide();
                         }
                     });
                 },
@@ -214,7 +198,7 @@
                 select: function (event, ui) {
                     for (var i = 0; i < resultData.length; i++) {
                         if (resultData[i].org_name === ui.item.label) {
-                            $("#last_operations_for_org_id").val(resultData[i].org_id);
+                            $("#org_id").val(resultData[i].id);
                             getLastOperations();
                             break;
                         }
@@ -223,10 +207,103 @@
             });
         });
 
+        $(document).ready(function () {
+            var resultData;
+            $('#org_group_name').autocomplete({
 
+                source: function (query, result) {
+                    $("#loader").show();
+                    $.ajax({
+                        url: "/org-group-autocomplete?query=" + query.term,
+                        dataType: "json",
+                        type: "GET",
+                        success: function (data) {
+                            resultData = data;
+                            result($.map(data, function (item) {
+                                return item.org_group_name;
+                            }));
+
+                            $("#loader").hide();
+                        }
+                    });
+                },
+                minLength: 3,
+                select: function (event, ui) {
+                    for (var i = 0; i < resultData.length; i++) {
+                        if (resultData[i].org_group_name === ui.item.label) {
+                            $("#org_group_id").val(resultData[i].id);
+                            getLastOperations();
+                            break;
+                        }
+                    }
+                }
+            });
+        });
 
         getLastOperations();
-        getLastOperationsInterval();
+        //getLastOperationsInterval();
+    </script>
+
+    <script>
+
+        $('#get_report_btn').on('click', function(){
+            $("#report_creating_in_progress").val("1");
+            $("#loader").show();
+            $.ajax({
+                // url: "/get-report?org_id=" + $('#org_id').val() + "&date=" + $('#reportrange').val(),
+                url: "/get-report",
+                data: {
+                  org_group_id: $('#org_group_id').val(),
+                  org_id: $('#org_id').val(),
+                  date: $('#reportrange').val()
+
+                },
+                dataType: 'binary',
+                xhrFields: {
+                    'responseType': 'blob'
+                },
+                success: function(data, status, xhr) {
+                    var blob = new Blob([data], {type: xhr.getResponseHeader('Content-Type')});
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = $('#reportrange').val() + '_TT.GATE.REPORT.xlsx';
+                    link.click();
+                    $("#loader").hide();
+                    $("#report_creating_in_progress").val("0");
+                }
+            });
+        });
+
+
+
+        $('#report_view_btn').on('click', function(){
+
+            if($('#org_id').val() === "0"){
+                alert("Для запроса нужно выбрать Организацию из списка");
+            } else {
+                $("#report_view").val("1");
+                $("#loader").show();
+                $.ajax({
+                    // url: "/get-report?org_id=" + $('#org_id').val() + "&date=" + $('#reportrange').val(),
+                    type: "GET",
+                    url: "/view-report",
+                    data: {
+                        org_id: $('#org_id').val(),
+                        date: $('#reportrange').val(),
+                        time: $('#time').val()
+                    },
+                    success: function(data) {
+                        $("#operation-panel-body").html(data);
+                        $("#loader").hide();
+
+                    }
+                });
+            }
+
+        });
+
+
+
     </script>
 
 

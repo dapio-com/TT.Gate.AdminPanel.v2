@@ -1,26 +1,32 @@
 function getTerminalPanel() {
-
+    $("#loader").show();
     $.ajax({
         type: 'GET',
         url: '/terminal-panel',
         cache: false,
         success: function(text){
             $("#page-wrapper").html(text);
+            $("#loader").hide();
+
         }
-    })
+    });
+
 
 }
 
+function cleanTerminalTid() {
+    $("#terminal_tid").val("");
+}
 function cleanTerminalForm() {
 
     $("#terminal_org_name").val("");
-    $("#terminal_org_id").val("");
+    $("#terminal_org_id").val("0");
     $("#terminal_tid").val("");
     $("#terminal_tsp").val("");
 }
 
 function terminalAddCheck() {
-
+    $("#loader").show();
     var terminal_org_id = $("#terminal_org_id").val();
     var terminal_tid = $("#terminal_tid").val().trim();
     var terminal_tsp = $("#terminal_tsp").val().trim();
@@ -33,22 +39,24 @@ function terminalAddCheck() {
         data: {
             terminal_tid : terminal_tid
         },
-        success: function (text) {
-            if(text.trim() === 'true'){
+        success: function (bool) {
+            if(bool){
                 alert ("Терминал " + terminal_tid + " уже существует");
                 $("#terminal_tid").val("");
+                $("#loader").hide();
+
             } else {
                 terminalAdd(terminal_org_id, terminal_tid, terminal_tsp);
-                cleanTerminalForm();
+                cleanTerminalTid();
             }
         }
     });
+
 }
 function terminalAdd(terminal_org_id, terminal_tid, terminal_tsp) {
 
-    //var org_name = $("#org_name").val().trim();
-    //var org_owner = $("#org_owner").val().trim();
-    if (terminal_tid.length !== 0 && terminal_org_id != null){
+    if (terminal_tid.toString().length > 7 && terminal_org_id > 0){
+
         $.ajax({
             type: "POST",
             url: "/terminal-add",
@@ -59,35 +67,25 @@ function terminalAdd(terminal_org_id, terminal_tid, terminal_tsp) {
                 terminal_tsp: terminal_tsp
             },
             success: function (text) {
-                $("#terminal-panel-body").html(text);
-                let button = $("#allBtn");
-                button.val(parseInt(button.val()) + 1);
+                $("#terminal-panel-body").html(text)
+                $("#loader").hide();
+                cleanTerminalTid();
+
             }
         });
     } else {
         alert ("Укажите TID и привяжите к Организации");
+        $("#loader").hide();
     }
 
-    cleanTerminalForm();
-
-}
-
-
-function terminalShowAll() {
-    var size = $("#allBtn").val();
-    $.ajax({
-        type: "GET",
-        url: "/terminal-show-all?size=" + size,
-        cache: false,
-        success: function (text) {
-            $("#terminal-panel-body").html(text);
-        }
-    });
 
 
 }
+
+
 
 function getTerminalEditForm(id){
+    $("#loader").show();
     $.ajax({
         type: "GET",
         url: "/terminal-edit-form",
@@ -97,8 +95,11 @@ function getTerminalEditForm(id){
         },
         success: function (text) {
             $("#terminal_form").html(text);
+            $("#loader").hide();
+
         }
-    })
+    });
+
 }
 
 function terminalEdit(id) {
@@ -109,11 +110,8 @@ function terminalEdit(id) {
     var terminal_tsp = $("#terminal_tsp").val().trim();
     var terminal_status = $("#terminal_status").val();
 
-    console.log(terminal_org_name);
-    console.log(terminal_org_id);
-    console.log(terminal_tid);
     if (terminal_tid.length > 0 && terminal_org_name.length > 0){
-        console.log("in AJAX");
+        $("#loader").show();
         $.ajax({
             type: "POST",
             url: "/terminal-edit",
@@ -126,16 +124,17 @@ function terminalEdit(id) {
                 terminal_status: terminal_status
             },
             success: function (text) {
-                if(text === "ok"){
-                    cleanTerminalForm();
-                    getTerminalPanel();
-                }
+                $("#page-wrapper").html(text);
+                $("#loader").hide();
+                cleanTerminalForm();
+
             }
         });
     } else {
-        alert ("Введите Наименование Организации\nили\n! TID Терминала !");
+        alert ("Введите Наименование Организации\nили\nTID Терминала");
     }
     //cleanFormOrgAdd();
+
 }
 
 function terminalStatus() {
@@ -156,9 +155,22 @@ function terminalStatus() {
 
 }
 
+
+const confirmTerminalDelete = async (id) => {
+
+    const confirm = await ui.confirm("Подтвердить удаление записи о терминале ?");
+
+    if(confirm){
+        terminalDelete(id);
+        //return true;
+    }
+
+};
+
+
 function terminalDelete(id) {
 
-    if(confirm("Вы действиельно хотите\nудалить запись об этом\nтерминале ?")){
+    $("#loader").show();
         $.ajax({
             type: "POST",
             url: "/terminal-delete",
@@ -167,28 +179,17 @@ function terminalDelete(id) {
                 id: id
             },
             success: function (text) {
-                if(text === "ok"){
-                    cleanTerminalForm();
-                    getTerminalPanel();
-                }
+                cleanTerminalForm();
+                $("#terminal-panel-body").html(text);
+                $("#loader").hide();
+
+
             }
         });
-    }
-
-}
-
-function terminalShowAll() {
-
-    $.ajax({
-        type: "GET",
-        url: "/terminal-show-all",
-        cache: false,
-        success: function (text) {
-            $("#terminal-panel-body").html(text);
-        }
-    });
 
 
 }
+
+
 
 

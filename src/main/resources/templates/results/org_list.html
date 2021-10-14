@@ -1,0 +1,20 @@
+
+
+    <table xmlns:th="http://www.thymeleaf.org" class="table table-hover">
+        <thead style="position: sticky; top: 0; background-color: #eeeeee;">
+        <tr>
+            <th>#</th>
+            <th>Наименование Организации</th>
+            <th>Собственник</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${orgs}">
+            <td th:text="${el.id}"></td>
+            <td th:text="${el.org_name}"></td>
+            <td th:text="${el.org_owner}"></td>
+        </tr>
+        </tbody>
+    </table>
+

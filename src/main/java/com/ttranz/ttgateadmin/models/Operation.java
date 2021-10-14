@@ -12,9 +12,10 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     private Date op_date_time;
 
+    private Long op_org_group_id;
     private Long op_org_id;
     private String op_tsp;
     private String op_ip;
@@ -42,32 +43,33 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(Long id, Date op_date_time, Long op_org_id, String op_tsp, String op_ip, String op_tid, String op_mti, String op_stan, String op_rrn, String op_auth_code, String op_card_num, BigDecimal op_amount, String op_bill_name, String op_xadd01, String op_xadd02, String op_xadd03, String op_xadd04, String op_xadd05, String op_xadd06, String op_xadd07, String op_xadd08, String op_xadd09, String op_xadd10, int op_status) {
-        this.id = id;
-        this.op_date_time = op_date_time;
-        this.op_org_id = op_org_id;
-        this.op_tsp = op_tsp;
-        this.op_ip = op_ip;
-        this.op_tid = op_tid;
-        this.op_mti = op_mti;
-        this.op_stan = op_stan;
-        this.op_rrn = op_rrn;
-        this.op_auth_code = op_auth_code;
-        this.op_card_num = op_card_num;
-        this.op_amount = op_amount;
-        this.op_bill_name = op_bill_name;
-        this.op_xadd01 = op_xadd01;
-        this.op_xadd02 = op_xadd02;
-        this.op_xadd03 = op_xadd03;
-        this.op_xadd04 = op_xadd04;
-        this.op_xadd05 = op_xadd05;
-        this.op_xadd06 = op_xadd06;
-        this.op_xadd07 = op_xadd07;
-        this.op_xadd08 = op_xadd08;
-        this.op_xadd09 = op_xadd09;
-        this.op_xadd10 = op_xadd10;
-        this.op_status = op_status;
-    }
+//    public Operation(Long id, Date op_date_time, Long op_org_group_id, Long op_org_id, String op_tsp, String op_ip, String op_tid, String op_mti, String op_stan, String op_rrn, String op_auth_code, String op_card_num, BigDecimal op_amount, String op_bill_name, String op_xadd01, String op_xadd02, String op_xadd03, String op_xadd04, String op_xadd05, String op_xadd06, String op_xadd07, String op_xadd08, String op_xadd09, String op_xadd10, int op_status) {
+//        this.id = id;
+//        this.op_date_time = op_date_time;
+//        this.op_org_group_id = op_org_group_id;
+//        this.op_org_id = op_org_id;
+//        this.op_tsp = op_tsp;
+//        this.op_ip = op_ip;
+//        this.op_tid = op_tid;
+//        this.op_mti = op_mti;
+//        this.op_stan = op_stan;
+//        this.op_rrn = op_rrn;
+//        this.op_auth_code = op_auth_code;
+//        this.op_card_num = op_card_num;
+//        this.op_amount = op_amount;
+//        this.op_bill_name = op_bill_name;
+//        this.op_xadd01 = op_xadd01;
+//        this.op_xadd02 = op_xadd02;
+//        this.op_xadd03 = op_xadd03;
+//        this.op_xadd04 = op_xadd04;
+//        this.op_xadd05 = op_xadd05;
+//        this.op_xadd06 = op_xadd06;
+//        this.op_xadd07 = op_xadd07;
+//        this.op_xadd08 = op_xadd08;
+//        this.op_xadd09 = op_xadd09;
+//        this.op_xadd10 = op_xadd10;
+//        this.op_status = op_status;
+//    }
 
     public Long getId() {
         return id;
@@ -83,6 +85,14 @@ public class Operation {
 
     public void setOp_date_time(Date op_date_time) {
         this.op_date_time = op_date_time;
+    }
+
+    public Long getOp_org_group_id() {
+        return op_org_group_id;
+    }
+
+    public void setOp_org_group_id(Long op_org_group_id) {
+        this.op_org_group_id = op_org_group_id;
     }
 
     public Long getOp_org_id() {

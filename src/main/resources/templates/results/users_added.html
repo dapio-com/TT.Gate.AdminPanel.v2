@@ -1,0 +1,28 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="users_added" class="table-responsive">
+
+    <table class="table table-hover">
+        <thead style="position: sticky; top: 0; background-color: white">
+        <tr>
+            <th>#</th>
+            <th>Пользователь (логин)</th>
+            <th>Описание</th>
+            <th>Роли</th>
+            <th>Группа</th>
+            <th>Организация</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${users}" th:class="${el.userStatus == false} ? 'warning'" th:if="${el.roles.size() < 4}">
+            <td th:text="${el.id}"></td>
+            <td th:text="${el.userName}"></td>
+            <td th:text="${el.userDescription}"></td>
+            <td th:text="${el.roles}"></td>
+            <td th:text="${el.userOrgGroupName}"></td>
+            <td th:text="${el.userOrgName}"></td>
+            <td><span class="fa fa-pencil fa-fw link" th:id="${el.id}" onclick="getUserEditForm(this.id)"></span><span class="fa fa-trash fa-fw link" th:id="${el.id}" onclick="confirmUserDelete(this.id)"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

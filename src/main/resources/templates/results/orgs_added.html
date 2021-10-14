@@ -1,19 +1,22 @@
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="orgs_added" class="table-responsive">
 
     <table class="table table-hover">
-            <thead>
+            <thead style="position: sticky; top: 0; background-color: white">
             <tr>
                 <th>#</th>
                 <th>Наименование Организации</th>
                 <th>Собственник</th>
+                <th>Группа</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="el : ${orgs}">
+            <tr th:each="el : ${page.getContent()}">
                 <td th:text="${el.id}"></td>
                 <td th:text="${el.org_name}"></td>
                 <td th:text="${el.org_owner}"></td>
-                <td><span class="fa fa-pencil fa-fw" th:id="${el.id}" style="margin-right: 10px" onclick="getOrgEditForm(this.id)"></span><span class="fa fa-trash fa-fw" th:id="${el.id}" onclick="orgDelete(this.id)"></span></td>
+                <td th:text="${el.org_group_name}"></td>
+                <td><span class="fa fa-list fa-fw link" th:id="${el.id}" onclick="showTerminalList(this.id)"></span><span class="fa fa-pencil fa-fw link" th:id="${el.id}" onclick="getOrgEditForm(this.id)"></span><span class="fa fa-trash fa-fw link" th:id="${el.id}" onclick="confirmOrgDelete(this.id)"></span></td>
             </tr>
             </tbody>
     </table>

@@ -10,13 +10,53 @@
 
     <!-- WIDGETS -->
     <div class="row" id="widgets">
-        <div class="col-lg-6 col-md-6" id="org_form">
+        <div class="col-lg-5 col-md-5" id="org_form">
             <div style="margin-bottom:20px">
                 <h4>Добавить организацию</h4>
                 <form>
+                    <script>
+
+                        $(document).ready(function () {
+                            var resultData;
+                            $('#org_group_name').autocomplete({
+
+                                source: function (query, result) {
+                                    $("#loader").show();
+                                    $.ajax({
+                                        url: "/org-group-autocomplete?query=" + query.term,
+                                        dataType: "json",
+                                        type: "GET",
+                                        success: function (data) {
+                                            resultData = data;
+                                            result($.map(data, function (item) {
+                                                return item.org_group_name;
+                                            }));
+                                            $("#loader").hide();
+
+                                        }
+                                    });
+                                },
+                                minLength: 3,
+                                select: function (event, ui) {
+                                    for (var i = 0; i < resultData.length; i++) {
+                                        if (resultData[i].org_group_name === ui.item.label) {
+                                            $("#org_group_id").val(resultData[i].id);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                            });
+                        });
+
+                    </script>
+                    <input type="text" name="org_group_name" id="org_group_name" placeholder="введите название группы" class="form-control"/><br>
+                    <input type="hidden" name="org_group_id" id="org_group_id" value="0"/>
+
                     <input type="text" name="org_name" id="org_name" placeholder="введите название организации" class="form-control"/><br>
                     <input type="text" name="org_owner" id="org_owner" placeholder="собственник" class="form-control"/><br>
-                    <button type="button" class="btn btn-success" onclick="orgAddCheck()">добавить</button>
+                    <button type="button" class="btn btn-success" onclick="cleanOrgForm()"><span class="fa fa-file fa-fw"></span> сброс</button>
+                    <button type="button" class="btn btn-success" onclick="orgAddCheck()"><span class="fa fa-plus fa-fw"></span> добавить</button>
                 </form>
             </div>
         </div>
@@ -34,6 +74,7 @@
                         //alert(searchFor);
                         //loading_show();
                         timer = setTimeout(function () {
+                            $("#loader").show();
                             $.ajax({
                                 url: "/org-search",
                                 cache: false,
@@ -44,6 +85,7 @@
                                 success: function(text){
                                     $("#org-panel-body").html(text);
                                     //loading_hide();
+                                    $("#loader").hide();
                                 }
                             });
                         }, 1000);
@@ -52,10 +94,7 @@
             });
             </script>
             <input type="text" class="form-control" placeholder="поиск..." id="org_search">
-            <button type="button" class="btn btn-success" onclick="orgShowAll()">все</button>
-            <!--                             <span class="input-group-btn">-->
-            <!--                                <button class="btn btn-success" type="button">все</button>-->
-            <!--                            </span>-->
+<!--            <button type="button" class="btn btn-success" onclick="orgShowAll()">все</button>-->
 
         </form>
     </div>
@@ -70,7 +109,7 @@
                     <i class="fa fa-list-alt fa-fw"></i>
                 </div>
 
-                <div class="panel-body" id="org-panel-body" style="max-height: 400px; overflow-y: auto">
+                <div class="panel-body" id="org-panel-body" style="max-height: 400px; overflow-y: auto; padding: 0 15px">
 
                     <div class="table-responsive" th:replace="results/orgs_added :: orgs_added"></div>
 
@@ -81,6 +120,20 @@
 
     </div>
 
+    <script>
+
+        $(document).ready(function() {
+            $("#org_group_name").blur(function() {
+                if($("#org_group_name").val().length === 0){
+                    $("#org_group_id").val("0");
+
+                }
+                //alert($("#org_name").val().length);
+            });
+        });
+
+
+    </script>
 
 
 </div>

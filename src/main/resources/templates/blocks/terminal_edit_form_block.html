@@ -2,35 +2,13 @@
     <h4>Редактировать терминал</h4>
     <form th:each="el : ${terminal}">
         <script>
-
-            $(document).ready(function () {
-
-                $('#terminal_org_id').autocomplete({
-                    events: {
-                        searchPost: function (resultFromServer) {
-
-                            //console.log(JSON.parse(resultFromServer));
-                            //console.log(resultFromServer);
-                            return JSON.parse(resultFromServer);
-                        }
-                    }
-                });
-
-
-            });
-
-            $('#terminal_org_name').on('autocomplete.input', function (evt, item) {
-                //console.log(item);
-                //$('.basicAutoSelectSelected').html(JSON.stringify(item));
-            });
-
-
+            
             $(document).ready(function () {
                 var resultData;
                 $('#terminal_org_name').autocomplete({
 
                     source: function (query, result) {
-
+                        $("#loader").show();
                         $.ajax({
                             url: "/org-autocomplete?query=" + query.term,
                             dataType: "json",
@@ -41,6 +19,8 @@
                                     return item.org_name;
                                 }));
 
+                                $("#loader").hide();
+
                             }
                         });
                     },
@@ -48,19 +28,10 @@
                     select: function (event, ui) {
                         for (var i = 0; i < resultData.length; i++) {
                             if (resultData[i].org_name === ui.item.label) {
-                                $("#terminal_org_id").val(resultData[i].org_id);
+                                $("#terminal_org_id").val(resultData[i].id);
                                 break;
                             }
                         }
-
-
-                        // let id = resultData.filter(function (result) {
-                        //     console.log("RESULT : " + result.org_name);
-                        //     console.log("UI : ", ui.item.org_name);
-                        //     //return result.org_name === ui.item.org_name;
-                        //
-                        // });
-                        // console.log(id);
                     }
 
                 });
@@ -75,13 +46,13 @@
         <div class="input-group">
             <input type="text" th:value="${el.terminal_tid}" name="terminal_tid" id="terminal_tid"  class="form-control"/>
             <input type="hidden" name="terminal_status" id="terminal_status" th:value="${el.terminal_status}">
-            <span class="input-group-btn" th:switch="${el.terminal_status}">
-                <button th:case="1" class="btn btn-success" type="button" id="terminal_status_btn" onclick="terminalStatus()">ВКЛ.</button>
-                <button th:case="0" class="btn btn-warning" type="button" id="terminal_status_btn" onclick="terminalStatus()">ВЫКЛ.</button>
+            <span class="input-group-btn">
+                <button th:class="${el.terminal_status == 0} ? 'btn btn-warning' : 'btn btn-success'" th:text="${el.terminal_status == 0} ? 'ВЫКЛ.' : 'ВКЛ.'" type="button" id="terminal_status_btn" onclick="terminalStatus()"></button>
             </span>
         </div><br>
 <!--        <input type="text" th:value="${el.terminal_tid}" name="terminal_tid" id="terminal_tid"  class="form-control"/><br>-->
         <input type="text" th:value="${el.terminal_tsp}" name="terminal_tsp" id="terminal_tsp"  class="form-control"/><br>
-        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="terminalEdit(this.id)">обновить</button>
+        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="terminalEdit(this.id)"><span class="fa fa-save fa-fw"></span> обновить</button>
+        <button type="button" class="btn btn-success" onclick="getTerminalPanel()"><span class="fa fa-times fa-fw"></span> отмена</button>
     </form>
 </div>

@@ -18,7 +18,7 @@ public class Error{
 
 
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     private Date error_date_time;
 
 

@@ -13,15 +13,32 @@
         <form class="form-inline">
 
 <!--            <button type="button" class="btn btn-success" onclick="operationsFormReset()">сброс</button>-->
-            <input type="text" class="form-control" size="50" style="margin-right: 20px" placeholder="поиск орг..." id="org_name">
+            <div class="btn-group" role="group" style="margin-right: 20px">
+                <button type="button" class="btn btn-warning" id="org_btn" onclick="chartOrgGroupSelect(1)">ОРГ</button>
+                <button type="button" class="btn btn-default" id="org_group_btn" onclick="chartOrgGroupSelect(2)">ГР</button>
+            </div>
+
+            <input type="text" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск орг..." id="org_name">
             <input type="hidden" value="0" id="org_id">
 
-            <input type="text" id="daterange" class="form-control" size="25" style="margin-right: 20px" placeholder="укажите диапазон">
+            <input type="hidden" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск гр..." id="org_group_name">
+            <input type="hidden" value="0" id="org_group_id">
 
-            <button type="button" class="btn btn-success" onclick="getChart()">показать</button>
+            <input type="text" id="daterange" class="form-control link" size="25" style="margin-right: 20px" placeholder="укажите диапазон">
+
+            <div class="btn-group" role="group" style="margin-right: 20px">
+                <button type="button" class="btn btn-warning" id="month" onclick="chartTypeSelect(1)">месяцы</button>
+                <button type="button" class="btn btn-default" id="day" onclick="chartTypeSelect(2)">дни</button>
+                <button type="button" class="btn btn-default" id="hour" onclick="chartTypeSelect(3)">часы</button>
+            </div>
+            <input type="hidden" value="1" id="chartType">
+
+            <button type="button" class="btn btn-success" onclick="getChart2()">показать</button>
 
         </form>
     </div>
+
+
 
 
     <!-- DATE RANGE HANDLER    -->
@@ -88,13 +105,34 @@
 
 
     <!-- CONTENTS -->
-    <div class="row col-lg-12 col-md-12" id="contents">
+    <div class="row col-lg-12" id="contents">
 
         <!-- CHART BLOCK -->
-        <div id="chartContainer" style="height: 370px; width: 99%;"></div>
+        <div id="chartContainer" style="width: 95%;"></div>
 
     </div>
 
+
+    <script>
+
+        $(document).ready(function() {
+            $("#org_name").blur(function() {
+                if($("#org_name").val().length === 0){
+                    $("#org_id").val("0");
+
+                }
+                //alert($("#org_name").val().length);
+            });
+
+            $("#org_group_name").blur(function() {
+                if($("#org_group_name").val().length === 0){
+                    $("#org_group_id").val("0");
+
+                }
+                //alert($("#org_name").val().length);
+            });
+        });
+    </script>
 
     <script>
 
@@ -103,9 +141,9 @@
             $('#org_name').autocomplete({
 
                 source: function (query, result) {
-
+                    $("#loader").show();
                     $.ajax({
-                        url: "/org-autocomplete?query=" + query.term,
+                        url: "/org-autocomplete?query=" + query.term + "&orgGroupId=" + $('#org_group_id').val(),
                         dataType: "json",
                         type: "GET",
                         success: function (data) {
@@ -113,6 +151,8 @@
                             result($.map(data, function (item) {
                                 return item.org_name;
                             }));
+
+                            $("#loader").hide();
                         }
                     });
                 },
@@ -120,7 +160,39 @@
                 select: function (event, ui) {
                     for (var i = 0; i < resultData.length; i++) {
                         if (resultData[i].org_name === ui.item.label) {
-                            $("#org_id").val(resultData[i].org_id);
+                            $("#org_id").val(resultData[i].id);
+                            break;
+                        }
+                    }
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            var resultData;
+            $('#org_group_name').autocomplete({
+
+                source: function (query, result) {
+                    $("#loader").show();
+                    $.ajax({
+                        url: "/org-group-autocomplete?query=" + query.term,
+                        dataType: "json",
+                        type: "GET",
+                        success: function (data) {
+                            resultData = data;
+                            result($.map(data, function (item) {
+                                return item.org_group_name;
+                            }));
+
+                            $("#loader").hide();
+                        }
+                    });
+                },
+                minLength: 3,
+                select: function (event, ui) {
+                    for (var i = 0; i < resultData.length; i++) {
+                        if (resultData[i].org_group_name === ui.item.label) {
+                            $("#org_group_id").val(resultData[i].id);
                             break;
                         }
                     }

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 
     <title>TTGate Admin Panel v2.0</title>
 
+    <link href="css/main.css" rel="stylesheet">
 
     <link href="css/jquery-ui-1.12.1.css" rel="stylesheet">
 
@@ -20,12 +20,8 @@
     <!-- Custom Fonts -->
     <link href="css/font-awesome.min.css" rel="stylesheet">
 
-
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="css/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
@@ -38,7 +34,46 @@
 
 </head>
 
-<body onload="getCounters(); getErrors(); getOperationsPerMinute(); setInterval(function () { getCounters(); getErrors(); getOperationsPerMinute()}, 30000);">
+<body onload="getCounters(); getErrors(); getOperationsPerMinute(); setIntervals(10000)">
+
+<div id="alert_dialog" class="alert_dialog" style="display:none;">
+    <div class="fog"></div>
+    <div class="alert_body">
+        <div style="text-align: right"><span class="fa fa-warning fa-2x alert_icon"></span></div>
+        <hr>
+        <span class="alert_text"></span>
+        <hr>
+        <div style="text-align: center"><button id="alert_ok_btn" class="btn btn-success alert_btn">ОК</button></span></div>
+    </div>
+</div>
+
+<div id="confirm_dialog" class="alert_dialog" style="display:none;">
+    <div class="fog"></div>
+    <div class="alert_body">
+        <div style="text-align: right"><span class="fa fa-question fa-2x alert_icon"></span></div>
+        <hr>
+        <span class="alert_text"></span>
+        <hr>
+        <div style="text-align: center">
+            <button id="confirm_ok_btn" class="btn btn-success alert_btn">Да</button>
+            <button id="confirm_cancel_btn" class="btn btn-success alert_btn">Нет</button>
+        </div>
+    </div>
+</div>
+
+<div id="list" class="list" style="display:none;">
+    <div class="fog"></div>
+    <div class="list_body">
+        <div style="text-align: right"><span class="fa fa-list fa-2x alert_icon"></span></div>
+        <hr>
+        <div class="list_text" style="max-height: 300px; overflow-y: auto"></div>
+        <hr>
+        <div style="text-align: center"><button id="list_ok_btn" class="btn btn-success alert_btn">ОК</button></span></div>
+    </div>
+</div>
+
+
+
 
 <div id="wrapper">
 
@@ -46,238 +81,64 @@
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">TT.Gate Admin Panel v2.0</a>
+
+            <img src="img/clock_loader2.gif" id="loader" width="40px" height="40px" style="display: none; margin-top: 5px">
         </div>
 
         <!-- TOP LEFT LINKS -->
-        <ul class="nav navbar-top-links navbar-right">
+<!--        <div style="text-align: right; padding:15px 15px;font-size:18px;">-->
+<!--            <form action="/logout" method="post">-->
+<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+<!--                <button type="submit" class="btn-link"><span class="fa fa-user fa-fw"></span> Выйти</button>-->
+<!--            </form>-->
+<!--        </div>-->
+
+
+
+
+        <ul class="nav navbar-top-links navbar-right" style="font-size:18px; margin-top: 10px">
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-messages">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <strong>John Smith</strong>
-                                <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                            </div>
-                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <strong>John Smith</strong>
-                                <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                            </div>
-                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <strong>John Smith</strong>
-                                <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                            </div>
-                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a class="text-center" href="#">
-                            <strong>Read All Messages</strong>
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-messages -->
+                <span class="fa fa-user fa-fw"></span> <span sec:authentication="name"> </span>
+
             </li>
-            <!-- /.dropdown -->
             <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-tasks">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 1</strong>
-                                    <span class="pull-right text-muted">40% Complete</span>
-                                </p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                        <span class="sr-only">40% Complete (success)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 2</strong>
-                                    <span class="pull-right text-muted">20% Complete</span>
-                                </p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                        <span class="sr-only">20% Complete</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 3</strong>
-                                    <span class="pull-right text-muted">60% Complete</span>
-                                </p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                        <span class="sr-only">60% Complete (warning)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 4</strong>
-                                    <span class="pull-right text-muted">80% Complete</span>
-                                </p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                        <span class="sr-only">80% Complete (danger)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a class="text-center" href="#">
-                            <strong>See All Tasks</strong>
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-tasks -->
+                <form action="/logout" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" class="btn-link"><span class="fa fa-sign-out fa-fw"></span> Выйти</button>
+                </form>
             </li>
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-alerts">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-comment fa-fw"></i> New Comment
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                <span class="pull-right text-muted small">12 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-tasks fa-fw"></i> New Task
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a class="text-center" href="#">
-                            <strong>See All Alerts</strong>
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-alerts -->
-            </li>
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
-            <!-- /.dropdown -->
+
         </ul>
         <!-- TOP LEFT LINKS -->
 
-        <div class="navbar-default sidebar" role="navigation">
+        <div sec:authorize="hasAuthority('OPERATOR')" class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
 
-                    <li>
-                        <a onclick="getMainPanel()"><i class="fa fa-dashboard fa-fw"></i> Главная панель</a>
+                    <li sec:authorize="hasAuthority('OPERATOR')">
+                        <a onclick="getMainPanel()" class="dashboard_link"><i class="fa fa-dashboard fa-fw"></i> Главная панель</a>
+                    </li>
+                    <li sec:authorize="hasAuthority('ADMIN')">
+                        <a onclick="getOrgGroupPanel()" class="dashboard_link"><i class="fa fa-cubes fa-fw"></i> Группы</a>
+                    </li>
+                    <li sec:authorize="hasAuthority('ADMIN')">
+                        <a onclick="getOrgPanel()" class="dashboard_link"><i class="fa fa-institution fa-fw"></i> Организации</a>
+                    </li>
+                    <li sec:authorize="hasAuthority('ADMIN')">
+                        <a onclick="getTerminalPanel()" class="dashboard_link"><i class="fa fa-tablet fa-fw"></i> Терминалы</a>
                     </li>
                     <li>
-                        <a onclick="getOrgPanel()"><i class="fa fa-institution fa-fw"></i> Организации</a>
+                        <a onclick="getOperationPanel()" class="dashboard_link"><i class="fa fa-list fa-fw"></i> Операции</a>
                     </li>
-                    <li>
-                        <a onclick="getTerminalPanel()"><i class="fa fa-tablet fa-fw"></i> Терминалы</a>
+
+                    <li sec:authorize="hasAuthority('ADMIN')">
+                        <a onclick="getChartPanel()" class="dashboard_link"><i class="fa fa-bar-chart-o fa-fw"></i> Графики</a>
                     </li>
-                    <li>
-                        <a onclick="getOperationPanel()"><i class="fa fa-list fa-fw"></i> Операции</a>
+
+                    <li sec:authorize="hasAuthority('ADMIN')">
+                        <a onclick="getUserPanel()" class="dashboard_link"><i class="fa fa-users fa-fw"></i> Пользователи</a>
                     </li>
-                    <li>
-                        <a onclick="getChartPanel()"><i class="fa fa-bar-chart-o fa-fw"></i> Графики</a>
-                    </li>
+
 
                 </ul>
             </div>
@@ -286,19 +147,12 @@
 
     </nav>
 
-    <div id="page-wrapper">
-        <div id="contents" th:replace="blocks/main_panel_block :: main_panel_block"></div>
+    <div id="page-wrapper" th:style="${user.roles.size() == 1} ? 'margin : 0px'">
+        <div id="contents" sec:authorize="hasAuthority('OPERATOR')" th:replace="blocks/main_panel_block :: main_panel_block"></div>
+
 
 
     </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -319,32 +173,102 @@
 <script src="js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap/bootstrap.min.js"></script>
 
-<!-- Metis Menu Plugin JavaScript -->
-<script src="js/metisMenu.min.js"></script>
-
-<!-- Morris Charts JavaScript -->
-<script src="js/morris.min.js"></script>
-<script src="js/raphael.min.js"></script>
-<script src="js/morris-data.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="js/sb-admin-2.js"></script>
 
 <script src="js/main_func.js"></script>
+<script src="js/org_group_func.js"></script>
 <script src="js/org_func.js"></script>
 <script src="js/terminal_func.js"></script>
 <script src="js/operation_func.js"></script>
 <script src="js/chart_func.js"></script>
+<script src="js/user_func.js"></script>
 
 
-<script src="js/jquery-ui-1.12.1.js"></script>
+<script src="js/datepicker/jquery-ui-1.12.1.js"></script>
 
-<script src="js/moment.min.js"></script>
-<script src="js/daterangepicker.min.js"></script>
+<script src="js/datepicker/moment.min.js"></script>
+<script src="js/datepicker/daterangepicker.min.js"></script>
 
-<script src="js/jquery.canvasjs.min.js"></script>
+
+
+<script src="js/chart.min.js"></script>
+
+
+<script>
+
+
+    function alert(alert_text) {
+
+        $("#alert_dialog").show();
+
+        $(".alert_text").text(alert_text);
+
+        var alert_height = $(document).height();
+        $(".fog").css('height', alert_height);
+
+    }
+
+    $("#alert_ok_btn").click(function(){
+        $("#alert_dialog").hide();
+    });
+
+
+
+        const ui = {
+            confirm: async (message) => createConfirm(message)
+        };
+
+        const createConfirm = (message) => {
+            return new Promise((complete)=>{
+                $('.alert_text').text(message)
+
+                $('#confirm_ok_btn').off('click');
+                $('#confirm_cancel_btn').off('click');
+
+                $('#confirm_ok_btn').on('click', ()=> { $('#confirm_dialog').hide(); complete(true); });
+                $('#confirm_cancel_btn').on('click', ()=> { $('#confirm_dialog').hide(); complete(false); });
+
+                $('#confirm_dialog').show();
+            });
+        };
+
+
+
+</script>
+
+
+<script>
+
+    $(document).ready(function() {
+        $("#list_ok_btn").click(function(){
+            $("#list_text").html("");
+            $("#list").hide();
+        });
+    });
+
+</script>
+
+<script>
+
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e,xhr) {
+        xhr.setRequestHeader(header, token);
+    });
+</script>
+
+<script th:if="${user.roles.size() == 1}">
+
+    $(document).ready(function () {
+
+        getOperationPanel();
+
+    })
+
+</script>
+
 
 
 

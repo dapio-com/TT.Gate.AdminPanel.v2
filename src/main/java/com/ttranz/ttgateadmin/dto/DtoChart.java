@@ -1,7 +1,7 @@
 package com.ttranz.ttgateadmin.dto;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Timestamp;
 
 public class DtoChart {
@@ -9,6 +9,7 @@ public class DtoChart {
 
 
     private Date op_date_time;
+    //private Timestamp op_date_time;
     private BigDecimal op_amount;
 
 

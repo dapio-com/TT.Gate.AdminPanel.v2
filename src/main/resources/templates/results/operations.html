@@ -1,8 +1,6 @@
-<!--<div xmlns:th="http://www.thymeleaf.org" th:fragment="operations" class="table-responsive">-->
-<!--<div xmlns:th="http://www.thymeleaf.org" class="table-responsive">-->
 
     <table class="table table-hover" xmlns:th="http://www.thymeleaf.org">
-        <thead>
+        <thead style="position: sticky; top: 0; background-color: white">
         <tr>
             <th>Дата/Время</th>
             <th>ТСП</th>
@@ -12,14 +10,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="el : ${operations}" th:class="${el.op_status == 0} ? 'danger'" th:id="${el.id}" onclick="opShowInfo(this.id)">
+        <tr th:each="el : ${operations}" th:class="${el.op_status == 0} ? 'warning link' : 'link'" th:id="${el.id}" onclick="opShowInfo(this.id)">
             <td th:text="${el.op_date_time}"></td>
             <td th:text="${el.op_tsp}"></td>
             <td th:text="${el.op_tid}"></td>
-            <td th:text="${el.op_card_num}"></td>
-            <td th:text="${el.op_amount}"></td>
+            <td th:text="${el.op_card_num.replaceAll(#strings.substring(el.op_card_num,6,12), '******')}"></td>
+            <td th:text="${el.op_amount}" style="text-align: right; padding-right: 50px"></td>
         </tr>
         </tbody>
     </table>
 
-<!--</div>-->

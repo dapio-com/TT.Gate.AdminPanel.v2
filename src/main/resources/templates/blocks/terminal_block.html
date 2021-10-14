@@ -10,7 +10,7 @@
 
     <!-- WIDGETS -->
     <div class="row" id="widgets">
-        <div class="col-lg-6 col-md-6" id="terminal_form">
+        <div class="col-lg-5 col-md-5" id="terminal_form">
             <div style="margin-bottom:20px">
                 <h4>Добавить терминал</h4>
                 <form>
@@ -18,35 +18,13 @@
                     <script>
 
                         $(document).ready(function () {
-
-                            $('#terminal_org_id').autocomplete({
-                                events: {
-                                    searchPost: function (resultFromServer) {
-
-                                        //console.log(JSON.parse(resultFromServer));
-                                        //console.log(resultFromServer);
-                                        return JSON.parse(resultFromServer);
-                                    }
-                                }
-                            });
-
-
-                        });
-
-                        $('#terminal_org_name').on('autocomplete.input', function (evt, item) {
-                            //console.log(item);
-                            //$('.basicAutoSelectSelected').html(JSON.stringify(item));
-                        });
-
-
-                        $(document).ready(function () {
                             var resultData;
                             $('#terminal_org_name').autocomplete({
 
                                 source: function (query, result) {
-
+                                    $("#loader").show();
                                     $.ajax({
-                                        url: "/org-autocomplete?query=" + query.term,
+                                        url: "/org-autocomplete?query=" + query.term + "&orgGroupId=" + $('#org_group_id').val(),
                                         dataType: "json",
                                         type: "GET",
                                         success: function (data) {
@@ -54,6 +32,7 @@
                                             result($.map(data, function (item) {
                                                 return item.org_name;
                                             }));
+                                            $("#loader").hide();
 
                                         }
                                     });
@@ -62,7 +41,7 @@
                                 select: function (event, ui) {
                                     for (var i = 0; i < resultData.length; i++) {
                                         if (resultData[i].org_name === ui.item.label) {
-                                            $("#terminal_org_id").val(resultData[i].org_id);
+                                            $("#terminal_org_id").val(resultData[i].id);
                                             break;
                                         }
                                     }
@@ -83,20 +62,17 @@
                     </script>
                     <input type="text" name="terminal_org_name" id="terminal_org_name"
                            placeholder="введите название организации" class="form-control"/><br>
-                    <input type="hidden" name="terminal_org_id" id="terminal_org_id"/>
-                    <!--                    <select class="form-control autoComplete1"-->
-                    <!--                            name="terminal_org_id"-->
-                    <!--                            data-url="/org-search"-->
-                    <!--                            data-noresults-text="Ничего не найдено"-->
-                    <!--                            autocomplete="off"-->
-                    <!--                            id="terminal_org_id">-->
-                    <!--                    </select>-->
+                    <input type="hidden" name="terminal_org_id" id="terminal_org_id" value="0"/>
+                    <input type="hidden" id="org_group_id" value="0"/>
 
                     <input type="text" name="terminal_tid" id="terminal_tid" placeholder="введите TID"
                            class="form-control" maxlength="8" minlength="8"/><br>
                     <input type="text" name="terminal_tsp" id="terminal_tsp"
                            placeholder="введите адрес установки/описание" class="form-control"/><br>
-                    <button type="button" class="btn btn-success" onclick="terminalAddCheck()">добавить</button>
+
+                    <button type="button" class="btn btn-success" onclick="cleanTerminalForm()"><span class="fa fa-file fa-fw"></span> сброс</button>
+                    <button type="button" class="btn btn-success" onclick="terminalAddCheck()"><span class="fa fa-plus fa-fw"></span> добавить</button>
+
                 </form>
             </div>
         </div>
@@ -116,6 +92,7 @@
                             //alert(searchFor);
                             //loading_show();
                             timer = setTimeout(function () {
+                                $("#loader").show();
                                 $.ajax({
                                     url: "/terminal-search",
                                     cache: false,
@@ -126,6 +103,7 @@
                                     success: function (text) {
                                         $("#terminal-panel-body").html(text);
                                         //loading_hide();
+                                        $("#loader").hide();
                                     }
                                 });
                             }, 1000);
@@ -133,13 +111,26 @@
                     });
                 });
                 </script>
+
+            <script>
+
+                $(document).ready(function() {
+
+                    $("#terminal_org_name").blur(function() {
+                        if($("#terminal_org_name").val().length === 0){
+                            $("#terminal_org_id").val("0");
+
+                        }
+                        //alert($("#org_name").val().length);
+                    });
+                });
+            </script>
                 <input type="text" class="form-control" placeholder="поиск..." id="terminal_search">
-                <button type="button" class="btn btn-success" id="allBtn" th:value="${page.getTotalElements()}"
-                        onclick="terminalShowAll()">все
-                </button>
-                <!--                             <span class="input-group-btn">-->
-                <!--                                <button class="btn btn-success" type="button">все</button>-->
-                <!--                            </span>-->
+<!--                <button type="button" class="btn btn-success" id="allBtn" th:value="${page.getTotalElements()}"-->
+<!--                        onclick="terminalShowAll()">все-->
+<!--                </button>-->
+
+
 
 
         </form>
@@ -155,7 +146,7 @@
                     <i class="fa fa-list-alt fa-fw"></i>
                 </div>
 
-                <div class="panel-body" id="terminal-panel-body" style="max-height: 350px; overflow-y: auto">
+                <div class="panel-body" id="terminal-panel-body" style="max-height: 350px; overflow-y: auto; padding: 0 15px">
 
                     <div class="table-responsive" th:replace="results/terminals_added :: terminals_added"></div>
 

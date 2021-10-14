@@ -20,4 +20,17 @@ public interface CounterRepository extends CrudRepository<Counter, Long> {
     @Query(value = "SELECT id, total_operations, total_orgs, total_terminals FROM counter", nativeQuery = true)
     List<Counter> selectCounters();
 
+    @Query(value = "UPDATE counter SET total_orgs = total_orgs + 1 RETURNING total_orgs", nativeQuery = true)
+    Long counterOrgPlus();
+
+    @Query(value = "UPDATE counter SET total_orgs = total_orgs - 1 RETURNING total_orgs", nativeQuery = true)
+    Long counterOrgMinus();
+
+    @Query(value = "UPDATE counter SET total_terminals = total_terminals + 1 RETURNING total_terminals", nativeQuery = true)
+    Long counterTerminalPlus();
+
+    @Query(value = "UPDATE counter SET total_terminals = total_terminals - 1 RETURNING total_terminals", nativeQuery = true)
+    Long counterTerminalMinus();
+
+
 }

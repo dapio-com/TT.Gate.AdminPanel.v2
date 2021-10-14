@@ -1,34 +1,60 @@
 function getOperationPanel() {
-
+    $("#loader").show();
     $.ajax({
         type: 'GET',
         url: '/operation-panel',
-        cache: false,
+        cache: true,
         success: function(text){
             $("#page-wrapper").html(text);
+            $("#loader").hide();
+
         }
-    })
+    });
+
 
 }
 
-function getLastOperationsInterval() {
-    setInterval(function (){getLastOperations($("#last_operations_for_org_id").val())}, 10000);
+function operationsFormReset(){
+    $("#report_creating_in_progress").val("0");
+    $("#report_view").val("0");
+    $("#org_group_name").val("");
+    $("#org_group_id").val("0");
+    $("#org_name").val("");
+    $("#org_id").val("0");
+    $("#time").prop('selectedIndex', 0);
+    chartOrgGroupSelect(1);
+
+
+    var date = $.datepicker.formatDate('yy-mm-dd', new Date());
+    $("#reportrange").val(date + " - " + date);
+
+    getLastOperations();
+
 }
+
 
 function getLastOperations() {
 
-    if($("#last_operations_for_org_id").val() > -1){
-        $.ajax({
-            type: 'GET',
-            url: '/get-last-operations',
-            cache: false,
-            data: {
-                org_id: $("#last_operations_for_org_id").val()
-            },
-            success: function(text){
-                $("#operation-panel-body").html(text);
-            }
-        })
+
+    if($("*").is("#operation-panel-body")){
+        if($("#report_creating_in_progress").val() === "0" && $("#report_view").val() === "0"){
+            $("#loader").show();
+            $.ajax({
+                type: 'GET',
+                url: '/get-last-operations',
+                cache: false,
+                data: {
+                    org_group_id: $("#org_group_id").val(),
+                    org_id: $("#org_id").val()
+                },
+                success: function(text){
+                    $("#operation-panel-body").html(text);
+                    $("#loader").hide();
+
+                },
+            });
+
+        }
 
     }
 
@@ -36,6 +62,7 @@ function getLastOperations() {
 
 function opShowInfo(id) {
 
+    $("#loader").show();
     $('.menu_mobile').removeClass('hidden').addClass('active');
 
     $.ajax({
@@ -48,8 +75,11 @@ function opShowInfo(id) {
         success: function (text) {
             //alert(text);
             $(".menu_mobile").html(text);
+            $("#loader").hide();
+
         }
     });
+
 }
 
 function closeOpInfo() {
@@ -59,71 +89,5 @@ function closeOpInfo() {
 }
 
 
-function operationsFormReset() {
 
-    $("#org_name").val("");
-    $("#last_operations_for_org_id").val("0");
-
-
-}
-
-
-function getReport() {
-
-
-    window.open("/get-report?org_id="+$("#last_operations_for_org_id").val()+"&date="+$("#reportrange").val(), '_blank');
-    // $.ajax({
-    //     type: 'GET',
-    //     url: '/get-report',
-    //     cache: false,
-    //     data: {
-    //         org_id: $("#last_operations_for_org_id").val(),
-    //         date: $("#reportrange").val()
-    //     },
-    //     xhrFields: {
-    //         // make sure the response knows we're expecting a binary type in return.
-    //         // this is important, without it the excel file is marked corrupted.
-    //         responseType: 'arraybuffer'
-    //     }
-    //     // success: function(text){
-    //     //     $("#operation-panel-body").html(text);
-    //     // }
-    // }).done(function (data, status, xmlHeaderRequest) {
-    //     var downloadLink = document.createElement('a');
-    //     var blob = new Blob([data],
-    //         {
-    //             type: xmlHeaderRequest.getResponseHeader('Content-Type')
-    //         });
-    //     var url = window.URL || window.webkitURL;
-    //     var downloadUrl = url.createObjectURL(blob);
-    //     var fileName = '';
-    //
-    //
-    //
-    //     if (typeof window.navigator.msSaveBlob !== 'undefined') {
-    //         window.navigator.msSaveBlob(blob, fileName);
-    //     } else {
-    //         if (fileName) {
-    //             if (typeof downloadLink.download === 'undefined') {
-    //                 window.location = downloadUrl;
-    //             } else {
-    //                 downloadLink.href = downloadUrl;
-    //                 downloadLink.download = fileName;
-    //                 document.body.appendChild(downloadLink);
-    //                 downloadLink.click();
-    //             }
-    //         } else {
-    //             window.location = downloadUrl;
-    //         }
-    //
-    //         setTimeout(function () {
-    //                 url.revokeObjectURL(downloadUrl);
-    //             },
-    //             100);
-    //     }
-    // });
-    //
-
-
-}
 

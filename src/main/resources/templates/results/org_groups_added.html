@@ -1,0 +1,22 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="org_groups_added" class="table-responsive">
+
+    <table class="table table-hover">
+        <thead style="position: sticky; top: 0; background-color: white">
+        <tr>
+            <th>#</th>
+            <th>Наименование Группы</th>
+            <th>Описание Группы</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="el : ${org_groups}">
+            <td th:text="${el.id}"></td>
+            <td th:text="${el.org_group_name}"></td>
+            <td th:text="${el.org_group_description}"></td>
+            <td><span class="fa fa-list fa-fw link" th:id="${el.id}" onclick="showOrgList(this.id)"></span><span class="fa fa-pencil fa-fw link" th:id="${el.id}" onclick="getOrgGroupEditForm(this.id)"></span><span class="fa fa-trash fa-fw link" th:id="${el.id}" onclick="confirmOrgGroupDelete(this.id)"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
