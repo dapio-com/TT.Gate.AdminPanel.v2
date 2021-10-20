@@ -3,6 +3,7 @@ package com.ttranz.ttgateadmin.models;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -41,6 +42,12 @@ public class Operation {
 
 
     public Operation() {
+    }
+
+    public String getFormattedDate(){
+        String pattern = "yyyy-MM-dd hh:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(op_date_time);
     }
 
 //    public Operation(Long id, Date op_date_time, Long op_org_group_id, Long op_org_id, String op_tsp, String op_ip, String op_tid, String op_mti, String op_stan, String op_rrn, String op_auth_code, String op_card_num, BigDecimal op_amount, String op_bill_name, String op_xadd01, String op_xadd02, String op_xadd03, String op_xadd04, String op_xadd05, String op_xadd06, String op_xadd07, String op_xadd08, String op_xadd09, String op_xadd10, int op_status) {

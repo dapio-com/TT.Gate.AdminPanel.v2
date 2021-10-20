@@ -4,6 +4,7 @@ package com.ttranz.ttgateadmin.models;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -14,14 +15,8 @@ public class Error{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //private Long error_timestamp;
-
-
     @NotNull
-    //@Temporal(TemporalType.TIMESTAMP)
     private Date error_date_time;
-
-
 
     private String error_org_name;
     private String error_ip;
@@ -32,6 +27,14 @@ public class Error{
 
     public Error() {
     }
+
+
+    public String getFormattedDate(){
+        String pattern = "yyyy-MM-dd hh:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(error_date_time);
+    }
+
 
     public Long getId() {
         return id;

@@ -11,7 +11,7 @@
         </thead>
         <tbody>
         <tr th:each="el : ${operations}" th:class="${el.op_status == 0} ? 'warning link' : 'link'" th:id="${el.id}" onclick="opShowInfo(this.id)">
-            <td th:text="${el.op_date_time}"></td>
+            <td th:text="${el.getFormattedDate()}"></td>
             <td th:text="${el.op_tsp}"></td>
             <td th:text="${el.op_tid}"></td>
             <td th:text="${el.op_card_num.replaceAll(#strings.substring(el.op_card_num,6,12), '******')}"></td>

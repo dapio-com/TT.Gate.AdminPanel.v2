@@ -3,7 +3,7 @@
     <div class="fa fa-close fw-bold close" onclick="closeOpInfo()"><br><br></div>
     <table class="table table-hover">
         <tbody th:each="el : ${operation}">
-        <tr><td style="text-align: right">Дата/Время : </td><td th:text="${el.op_date_time}"></td></tr>
+        <tr><td style="text-align: right">Дата/Время : </td><td th:text="${el.getFormattedDate()}"></td></tr>
         <tr><td style="text-align: right">IP-Адрес : </td><td th:text="${el.op_ip}"></td></tr>
         <tr><td style="text-align: right">Терминал : </td><td th:text="${el.op_tid}"></td></tr>
         <tr><td style="text-align: right">ТСП : </td><td th:text="${el.op_tsp}"></td></tr>

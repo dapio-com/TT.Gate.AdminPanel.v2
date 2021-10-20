@@ -94,7 +94,7 @@ public class ReportFileExporter {
         for(int i = 0; i < operations.size(); i++) {
             Row dataRow = sheet.createRow(i + 1);
 
-            dataRow.createCell(0).setCellValue(String.valueOf(operations.get(i).getOp_date_time()));
+            dataRow.createCell(0).setCellValue(String.valueOf(operations.get(i).getFormattedDate()));
             //status = ((operations.get(i).getOp_status() == 0)? "X" : "OK");
             if ((operations.get(i).getOp_status() == 0)) {
                 dataRow.createCell(1).setCellValue("X");

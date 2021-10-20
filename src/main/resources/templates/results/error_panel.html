@@ -12,7 +12,7 @@
         </thead>
         <tbody>
         <tr th:each="el : ${errors}">
-            <td th:text="${el.error_date_time}"></td>
+            <td th:text="${el.getFormattedDate()}"></td>
             <td th:text="${el.error_ip}"></td>
             <td th:text="${el.error_tid}"></td>
             <td th:text="${el.error_tsp}"></td>
