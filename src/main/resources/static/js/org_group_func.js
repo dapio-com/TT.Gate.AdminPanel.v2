@@ -37,7 +37,7 @@ function orgGroupAddCheck() {
         success: function (bool) {
             if(bool){
                 cleanOrgGroupForm();
-                alert("Такая группа уже существует");
+                alert(alert_orgGroupExist);
                 $("#loader").hide();
             } else {
                 orgGroupAdd(org_group_name, org_group_description);
@@ -68,7 +68,7 @@ function orgGroupAdd(org_group_name, org_group_description) {
             }
         });
     } else {
-        alert ("Введите Наименование Группы !");
+        alert (alert_orgGroupNameEnter);
         $("#loader").hide();
     }
 
@@ -80,7 +80,15 @@ function orgGroupAdd(org_group_name, org_group_description) {
 
 const confirmOrgGroupDelete = async (id) => {
 
-    const confirm = await ui.confirm("Подтвердить удаление группы ?");
+    // let a = [${myAttribute}];
+    // let b = [#{summ}];
+    // console.log(a);
+    // console.log(b);
+
+    //const confirm = await ui.confirm("Удалить группу ?");
+    const confirm = await ui.confirm(confirm_orgGroupDelete);
+
+
 
     if(confirm){
         orgGroupDelete(id);
@@ -100,7 +108,7 @@ function orgGroupDelete(id) {
             },
             success: function (text) {
                 if(text.length === 0){
-                    alert("Невозможно удалить ! Существуют привязанные организации !");
+                    alert(alert_orgGroupDelete);
                     $("#loader").hide();
                 } else {
                     //cleanOrgGroupForm();
@@ -159,7 +167,7 @@ function orgGroupEdit(id) {
 
         });
     } else {
-        alert ("Введите Наименование Группы !");
+        alert (alert_orgGroupNameEnter);
     }
 
     //cleanFormOrgAdd();

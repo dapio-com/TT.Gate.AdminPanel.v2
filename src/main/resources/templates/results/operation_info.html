@@ -3,20 +3,20 @@
     <div class="fa fa-close fw-bold close" onclick="closeOpInfo()"><br><br></div>
     <table class="table table-hover">
         <tbody th:each="el : ${operation}">
-        <tr><td style="text-align: right">Дата/Время : </td><td th:text="${el.getFormattedDate()}"></td></tr>
-        <tr><td style="text-align: right">IP-Адрес : </td><td th:text="${el.op_ip}"></td></tr>
-        <tr><td style="text-align: right">Терминал : </td><td th:text="${el.op_tid}"></td></tr>
-        <tr><td style="text-align: right">ТСП : </td><td th:text="${el.op_tsp}"></td></tr>
-        <tr><td style="text-align: right">Карта : </td><td th:text="${el.op_card_num.replaceAll(#strings.substring(el.op_card_num,6,12), '******')}"></td></tr>
-        <tr><td style="text-align: right">STAN : </td><td th:text="${el.op_stan}"></td></tr>
-        <tr><td style="text-align: right">Авт-ция : </td><td th:text="${el.op_auth_code}"></td></tr>
-        <tr><td style="text-align: right">RRN : </td><td th:text="${el.op_rrn}"></td></tr>
-        <tr><td style="text-align: right">Статус : </td><td th:switch="${el.op_status}">
-                                    <span th:case="1" class="label label-success">ОПЛАЧЕНО</span>
-                                    <span th:case="0" class="label label-warning">ОТМЕНЕНО</span>
+        <tr><td style="text-align: right" th:text="#{date}">Дата/Время</td><td> : </td><td th:text="${el.getFormattedDate()}"></td></tr>
+        <tr><td style="text-align: right" th:text="#{ip}">IP-Адрес</td><td> : </td><td th:text="${el.op_ip}"></td></tr>
+        <tr><td style="text-align: right" th:text="#{terminal}">Терминал</td><td> : </td><td th:text="${el.op_tid}"></td></tr>
+        <tr><td style="text-align: right" th:text="#{tsp}">ТСП</td><td> : </td><td th:text="${el.op_tsp}"></td></tr>
+        <tr><td style="text-align: right" th:text="#{cardNum}">Номер карты</td><td> : </td><td th:text="${el.op_card_num.replaceAll(#strings.substring(el.op_card_num,6,12), '******')}"></td></tr>
+        <tr><td style="text-align: right">STAN</td><td> : </td><td th:text="${el.op_stan}"></td></tr>
+        <tr><td style="text-align: right" th:text="#{auth-code}">Код авт.</td><td> : </td><td th:text="${el.op_auth_code}"></td></tr>
+        <tr><td style="text-align: right">RRN</td><td> : </td><td th:text="${el.op_rrn}"></td></tr>
+        <tr><td style="text-align: right" th:text="#{status}">Статус</td><td> : </td><td th:switch="${el.op_status}">
+                                    <span th:case="1" class="label label-success" th:text="#{PAID}">ОДОБРЕНО</span>
+                                    <span th:case="0" class="label label-warning" th:text="#{CANCELED}">ОТМЕНЕНО</span>
                               </td></tr>
-        <tr><td style="text-align: right;" class="huge">Сумма : </td><td th:text="${el.op_amount}" class="huge"></td></tr>
-        <tr><td style="text-align: right">Доп. инфо : </td><td>
+        <tr><td style="text-align: right;" class="huge" th:text="#{summ}">Сумма</td><td> : </td><td th:text="${el.op_amount}" class="huge"></td></tr>
+        <tr><td style="text-align: right" th:text="#{add-info}">Доп. инфо</td><td> : </td><td>
                                     <span th:text="${el.op_xadd01}"></span><br>
                                     <span th:text="${el.op_xadd02}"></span><br>
                                     <span th:text="${el.op_xadd03}"></span><br>

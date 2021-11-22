@@ -4,7 +4,7 @@
     <!-- PAGE TITLE -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header" id="page-header">Пользователи</h1>
+            <h1 class="page-header" id="page-header" th:text="#{menu-item.users}">Пользователи</h1>
         </div>
     </div>
 
@@ -12,33 +12,58 @@
     <div class="row" id="widgets">
         <div class="col-lg-5" id="user_form">
             <div style="margin-bottom:20px">
-                <h4>Добавить пользователя</h4>
-                <form>
-                    <input type="text" name="username" id="username" placeholder="введите имя пользователя (логин)" class="form-control" autocomplete="off"/><br>
+                <h4 th:text="#{add.user}">Добавить пользователя</h4>
+                <form style="margin-top: 20px">
 
-                    <div class="input-group">
-                        <input type="password" name="password" id="password" placeholder="пароль" class="form-control"/>
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" type="button" onclick="passwordGen()">сгенерить</button>
-                        </span>
-                    </div><br>
-                    <div class="col-lg-4" style="margin-left: -15px">
-                    <select id="userrole" name="userrole" class="form-control">
-                        <option value="ADMIN" onclick="groupInputDisplay()">Администратор</option>
-                        <option value="OPERATOR" onclick="groupInputDisplay()">Оператор</option>
-                        <option value="AGENT" onclick="groupInputDisplay()">Агент</option>
-                    </select>
+                    <div class="form-group">
+                    <span class="has-float-label">
+                        <label class="formLabel" for="username" th:text="#{user}"></label>
+                        <input type="text" name="username" id="username" class="form-control" autocomplete="off"/><br>
+                    </span>
                     </div>
-                    <div class="col-lg-offset-4">
-                        <input type="text" id="org_group_name" placeholder="группа" class="group_input form-control" disabled="disabled"/><br>
 
+                    <div class="form-group" style="display:table;">
+                    <span class="has-float-label">
+                        <label class="formLabel" for="password" th:text="#{label.password}"></label>
+                        <input class="form-control" style="border-radius: 4px 0 0 4px;" type="password" name="password" id="password" />
+                    </span>
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="button" onclick="passwordGen()" th:text="#{button.generate}"></button>
+                        </span>
+                    </div>
+
+                    <div class="col-lg-4" style="margin-left: -15px">
+                    <span class="has-float-label">
+                        <label class="formLabel" for="userrole" th:text="#{label.userRole}"></label>
+                        <select id="userrole" name="userrole" class="form-control">
+                        <option value="ADMIN" onclick="groupInputDisplay()" th:text="#{role.administrator}"></option>
+                        <option value="OPERATOR" onclick="groupInputDisplay()" th:text="#{role.operator}"></option>
+                        <option value="AGENT" onclick="groupInputDisplay()" th:text="#{role.agent}"></option>
+                        </select>
+                    </span>
+                    </div>
+
+                    <div class="col-lg-offset-4">
+                        <div class="form-group">
+                        <span class="has-float-label">
+                            <label class="formLabel" style="display: none" id="label_for_group_input" for="userrole" th:text="#{label.searchForGroup}"></label>
+                            <label class="formLabel" style="display: none" id="label_for_org_input" for="userrole" th:text="#{label.searchForOrg}"></label>
+                            <input type="text" id="org_group_name" class="group_input form-control" disabled="disabled"/><br>
+                        </span>
+                        </div>
                         <input type="hidden" id="org_group_id" value="0"/>
                         <input type="hidden" id="org_id" value="0"/>
                     </div>
 
-                    <input type="text" name="userdescription" id="userdescription" placeholder="описание" class="form-control"/><br>
-                    <button type="button" class="btn btn-success" onclick="cleanUserForm()"><span class="fa fa-file fa-fw"></span> сброс</button>
-                    <button type="button" class="btn btn-success" onclick="userAddCheck()"><span class="fa fa-plus fa-fw"></span> добавить</button>
+
+                    <div class="form-group">
+                    <span class="has-float-label">
+                        <label class="formLabel" for="userdescription" th:text="#{description}"></label>
+                        <input type="text" name="userdescription" id="userdescription" class="form-control"/><br>
+                    </span>
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="cleanUserForm()"><span class="fa fa-file fa-fw"></span></span><span th:text="' ' + #{button.clear}"></span></button>
+                    <button type="button" class="btn btn-success" onclick="userAddCheck()"><span class="fa fa-plus fa-fw"></span></span><span th:text="' ' + #{button.add}"></span></button>
                 </form>
             </div>
 
@@ -48,37 +73,10 @@
     <div class="row col-lg-4 col-md-4" style="margin-bottom: 20px">
         <form class="form-inline">
 
-            <script> // SEARCH SCRIPT
-            $(document).ready(function () {
-                var timer;
-                $('#user_search').keyup(function(){
-
-                    var searchFor = $('#user_search').val().trim();
-                    window.clearTimeout(timer);
-                    if (searchFor.length > 2) {
-                        //alert(searchFor);
-                        //loading_show();
-                        timer = setTimeout(function () {
-                            $("#loader").show();
-                            $.ajax({
-                                url: "/user-search",
-                                cache: false,
-                                type: "GET",
-                                data: {
-                                    searchFor: searchFor
-                                },
-                                success: function(text){
-                                    $("#user-panel-body").html(text);
-                                    //loading_hide();
-                                    $("#loader").hide();
-                                }
-                            });
-                        }, 1000);
-                    }
-                });
-            });
-            </script>
-            <input type="text" class="form-control" placeholder="поиск..." id="user_search">
+            <span class="has-float-label">
+                <label class="formLabel" for="user_search" th:text="#{label.search}"></label>
+                <input type="text" class="form-control" id="user_search">
+            </span>
 
 
         </form>
@@ -175,6 +173,37 @@
                     }
                 }
 
+            });
+        });
+
+
+        // SEARCH SCRIPT
+        $(document).ready(function () {
+            var timer;
+            $('#user_search').keyup(function(){
+
+                var searchFor = $('#user_search').val().trim();
+                window.clearTimeout(timer);
+                if (searchFor.length > 2) {
+                    //alert(searchFor);
+                    //loading_show();
+                    timer = setTimeout(function () {
+                        $("#loader").show();
+                        $.ajax({
+                            url: "/user-search",
+                            cache: false,
+                            type: "GET",
+                            data: {
+                                searchFor: searchFor
+                            },
+                            success: function(text){
+                                $("#user-panel-body").html(text);
+                                //loading_hide();
+                                $("#loader").hide();
+                            }
+                        });
+                    }, 1000);
+                }
             });
         });
 

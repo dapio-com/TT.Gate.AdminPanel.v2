@@ -4,7 +4,7 @@
     <!-- PAGE TITLE -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header" id="page-header">Операции</h1>
+            <h1 class="page-header" id="page-header" th:text="#{menu-item.operations}">Операции</h1>
         </div>
     </div>
 
@@ -12,55 +12,76 @@
 
     <div class="row col-lg-12 col-md-12" style="margin-bottom: 20px">
 
-        <button type="button" class="col-lg-1 btn btn-success" onclick="operationsFormReset()"><span class="fa fa-file fa-fw"></span> сброс</button>
-        <form class="col-lg-11 form-inline" style="margin-left: -10px">
-
+        <button type="button" class="col-lg-1 btn btn-success" onclick="operationsFormReset()"><span class="fa fa-file fa-fw"></span><span th:text="' ' + #{button.clear}"></span></button>
+        <form class="col-lg-11 form-inline">
 
 
             <div th:if="${user.getUserOrgId() == 0} AND ${user.getUserOrgGroupId() == 0}" class="btn-group" role="group" style="margin-right: 20px">
-                <button type="button" class="btn btn-warning" id="org_btn" onclick="chartOrgGroupSelect(1)">ОРГ</button>
-                <button type="button" class="btn btn-default" id="org_group_btn" onclick="chartOrgGroupSelect(2)">ГР</button>
+                <button type="button" class="btn btn-warning" id="org_btn" onclick="chartOrgGroupSelect(1)" th:text="#{button.org}"></button>
+                <button type="button" class="btn btn-default" id="org_group_btn" onclick="chartOrgGroupSelect(2)" th:text="#{button.gr}"></button>
             </div>
 
-<!--            <input th:type="${user.getUserOrgId() > 0} ? 'hidden' : 'text'" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск орг..." id="org_name">-->
-            <input th:if="${user.getUserOrgId() == 0}" type="text" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск орг..." id="org_name">
-            <input type="hidden" th:value="${user.getUserOrgId()}" id="org_id">
+            <div class="form-group">
+            <span class="has-float-label">
+                <label th:if="${user.getUserOrgId() == 0}" class="formLabel" for="org_name" id="label_for_org_input" th:text="#{label.searchForOrg}"></label>
+                <input th:if="${user.getUserOrgId() == 0}" type="text" class="form-control" size="50" style="margin-right: 20px;" id="org_name">
+                <input type="hidden" th:value="${user.getUserOrgId()}" id="org_id">
 
-            <input th:if="${user.getUserOrgGroupId() == 0} AND ${user.getUserOrgId() == 0}" type="hidden" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск гр..." id="org_group_name">
-            <input type="hidden" th:value="${user.getUserOrgGroupId()}" id="org_group_id">
+                <label th:if="${user.getUserOrgGroupId() == 0} AND ${user.getUserOrgId() == 0}" style="display: none" class="formLabel" for="org_group_name" id="label_for_group_input" th:text="#{label.searchForGroup}"></label>
+                <input th:if="${user.getUserOrgGroupId() == 0} AND ${user.getUserOrgId() == 0}" type="hidden" class="form-control" size="50" style="margin-right: 20px;" id="org_group_name">
+                <input type="hidden" th:value="${user.getUserOrgGroupId()}" id="org_group_id">
+            </span>
+            </div>
 
+            <div class="form-group">
+                <span class="has-float-label">
+                <label class="formLabel" for="tid" th:text="#{terminal}"></label>
+                <input type="text" id="tid" class="form-control" size="15" maxlength="8" minlength="8" style="margin-right: 20px">
+                </span>
+            </div>
 
-            <input type="text" id="reportrange" class="form-control link" size="25" style="margin-right: 20px">
-            <select name="time" id="time" class="form-control link time" style="margin-right: 20px">
-                <option value="">время</option>
-                <option value="01">01:00</option>
-                <option value="02">02:00</option>
-                <option value="03">03:00</option>
-                <option value="04">04:00</option>
-                <option value="05">05:00</option>
-                <option value="06">06:00</option>
-                <option value="07">07:00</option>
-                <option value="08">08:00</option>
-                <option value="09">09:00</option>
-                <option value="10">10:00</option>
-                <option value="11">11:00</option>
-                <option value="12">12:00</option>
-                <option value="13">13:00</option>
-                <option value="14">14:00</option>
-                <option value="15">15:00</option>
-                <option value="16">16:00</option>
-                <option value="17">17:00</option>
-                <option value="18">18:00</option>
-                <option value="19">19:00</option>
-                <option value="20">20:00</option>
-                <option value="21">21:00</option>
-                <option value="22">22:00</option>
-                <option value="23">23:00</option>
-            </select>
+            <div class="form-group">
+                <span class="has-float-label">
+                <label class="formLabel" for="reportrange" th:text="#{label.dateRange}"></label>
+                <input type="text" id="reportrange" class="form-control link" size="25" style="margin-right: 20px">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <span class="has-float-label">
+                <label class="formLabel" for="time" th:text="#{label.time}"></label>
+                <select name="time" id="time" class="form-control link time" style="margin-right: 20px">
+                    <option value="">--:--</option>
+                    <option value="01">01:00</option>
+                    <option value="02">02:00</option>
+                    <option value="03">03:00</option>
+                    <option value="04">04:00</option>
+                    <option value="05">05:00</option>
+                    <option value="06">06:00</option>
+                    <option value="07">07:00</option>
+                    <option value="08">08:00</option>
+                    <option value="09">09:00</option>
+                    <option value="10">10:00</option>
+                    <option value="11">11:00</option>
+                    <option value="12">12:00</option>
+                    <option value="13">13:00</option>
+                    <option value="14">14:00</option>
+                    <option value="15">15:00</option>
+                    <option value="16">16:00</option>
+                    <option value="17">17:00</option>
+                    <option value="18">18:00</option>
+                    <option value="19">19:00</option>
+                    <option value="20">20:00</option>
+                    <option value="21">21:00</option>
+                    <option value="22">22:00</option>
+                    <option value="23">23:00</option>
+                </select>
+                </span>
+            </div>
             <input type="hidden" id="report_view" value="0">
             <input type="hidden" id="report_creating_in_progress" value="0">
-            <button type="button" class="btn btn-success" id="report_view_btn"><span class="fa fa-list-alt fa-fw"></span> показать</button>
-            <button type="button" class="btn btn-success" id="get_report_btn"><span class="fa fa-file-excel-o fa-fw"></span> выгрузить</button>
+            <button type="button" class="btn btn-success" id="report_view_btn"><span class="fa fa-list-alt fa-fw"></span><span th:text="' ' + #{button.show}"></span></button>
+            <button type="button" class="btn btn-success" id="get_report_btn"><span class="fa fa-file-excel-o fa-fw"></span><span th:text="' ' + #{button.export}"></span></button>
 
         </form>
     </div>
@@ -284,11 +305,11 @@
                 $("#report_view").val("1");
                 $("#loader").show();
                 $.ajax({
-                    // url: "/get-report?org_id=" + $('#org_id').val() + "&date=" + $('#reportrange').val(),
                     type: "GET",
                     url: "/view-report",
                     data: {
                         org_id: $('#org_id').val(),
+                        tid: $('#tid').val(),
                         date: $('#reportrange').val(),
                         time: $('#time').val()
                     },

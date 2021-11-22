@@ -4,36 +4,49 @@
     <!-- PAGE TITLE -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header" id="page-header">Графики</h1>
+            <h1 class="page-header" id="page-header" th:text="#{menu-item.charts}">Графики</h1>
         </div>
     </div>
 
 
     <div class="row col-lg-12 col-md-12" style="margin-bottom: 20px">
+
+
         <form class="form-inline">
 
-<!--            <button type="button" class="btn btn-success" onclick="operationsFormReset()">сброс</button>-->
+
             <div class="btn-group" role="group" style="margin-right: 20px">
-                <button type="button" class="btn btn-warning" id="org_btn" onclick="chartOrgGroupSelect(1)">ОРГ</button>
-                <button type="button" class="btn btn-default" id="org_group_btn" onclick="chartOrgGroupSelect(2)">ГР</button>
+                <button type="button" class="btn btn-warning" id="org_btn" onclick="chartOrgGroupSelect(1)" th:text="#{button.org}"></button>
+                <button type="button" class="btn btn-default" id="org_group_btn" onclick="chartOrgGroupSelect(2)" th:text="#{button.gr}"></button>
             </div>
 
-            <input type="text" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск орг..." id="org_name">
-            <input type="hidden" value="0" id="org_id">
+            <div class="form-group">
+            <span class="has-float-label">
+                <label class="formLabel" for="org_name" id="label_for_org_input" th:text="#{label.searchForOrg}"></label>
+                <input type="text" class="form-control" size="50" style="margin-right: 20px;" id="org_name">
+                <input type="hidden" value="0" id="org_id">
 
-            <input type="hidden" class="form-control" size="50" style="margin-right: 20px;" placeholder="поиск гр..." id="org_group_name">
-            <input type="hidden" value="0" id="org_group_id">
+                <label style="display: none" class="formLabel" for="org_group_name" id="label_for_group_input" th:text="#{label.searchForGroup}"></label>
+                <input type="hidden" class="form-control" size="50" style="margin-right: 20px;" id="org_group_name">
+                <input type="hidden" value="0" id="org_group_id">
+            </span>
+            </div>
 
-            <input type="text" id="daterange" class="form-control link" size="25" style="margin-right: 20px" placeholder="укажите диапазон">
+            <div class="form-group">
+                <span class="has-float-label">
+                <label class="formLabel" for="daterange" th:text="#{label.dateRange}"></label>
+                <input type="text" id="daterange" class="form-control link" size="25" style="margin-right: 20px" placeholder="укажите диапазон">
+                </span>
+            </div>
 
             <div class="btn-group" role="group" style="margin-right: 20px">
-                <button type="button" class="btn btn-warning" id="month" onclick="chartTypeSelect(1)">месяцы</button>
-                <button type="button" class="btn btn-default" id="day" onclick="chartTypeSelect(2)">дни</button>
-                <button type="button" class="btn btn-default" id="hour" onclick="chartTypeSelect(3)">часы</button>
+                <button type="button" class="btn btn-warning" id="month" onclick="chartTypeSelect(1)" th:text="#{button.month}"></button>
+                <button type="button" class="btn btn-default" id="day" onclick="chartTypeSelect(2)" th:text="#{button.day}"></button>
+                <button type="button" class="btn btn-default" id="hour" onclick="chartTypeSelect(3)" th:text="#{button.hour}"></button>
             </div>
             <input type="hidden" value="1" id="chartType">
 
-            <button type="button" class="btn btn-success" onclick="getChart2()">показать</button>
+            <button type="button" class="btn btn-success" onclick="getChart2()" th:text="#{button.show}"></button>
 
         </form>
     </div>

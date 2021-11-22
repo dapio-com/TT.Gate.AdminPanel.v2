@@ -1,58 +1,74 @@
 <div xmlns:th="http://www.thymeleaf.org" style="margin-bottom:20px" >
-    <h4>Редактировать терминал</h4>
-    <form th:each="el : ${terminal}">
-        <script>
-            
-            $(document).ready(function () {
-                var resultData;
-                $('#terminal_org_name').autocomplete({
+    <h4 th:text="#{edit.terminal}">Редактировать терминал</h4>
+    <form th:each="el : ${terminal}" style="margin-top: 20px">
 
-                    source: function (query, result) {
-                        $("#loader").show();
-                        $.ajax({
-                            url: "/org-autocomplete?query=" + query.term,
-                            dataType: "json",
-                            type: "GET",
-                            success: function (data) {
-                                resultData = data;
-                                result($.map(data, function (item) {
-                                    return item.org_name;
-                                }));
-
-                                $("#loader").hide();
-
-                            }
-                        });
-                    },
-                    minLength: 3,
-                    select: function (event, ui) {
-                        for (var i = 0; i < resultData.length; i++) {
-                            if (resultData[i].org_name === ui.item.label) {
-                                $("#terminal_org_id").val(resultData[i].id);
-                                break;
-                            }
-                        }
-                    }
-
-                });
-            });
-
-        </script>
-
-        <input type="text" th:value="${el.org_name}" name="terminal_org_name" id="terminal_org_name" class="form-control"/><br>
+        <div class="form-group">
+            <span class="has-float-label">
+                <label class="formLabel" for="terminal_org_name" th:text="#{orgName}"></label>
+                <input class="form-control" type="text" th:value="${el.org_name}" name="terminal_org_name" id="terminal_org_name" />
+            </span>
+        </div>
         <input type="hidden" name="terminal_org_id" id="terminal_org_id" th:value="${el.terminal_org_id}" />
 
 
-        <div class="input-group">
-            <input type="text" th:value="${el.terminal_tid}" name="terminal_tid" id="terminal_tid"  class="form-control"/>
+<!--        <div class="input-group">-->
+        <div class="form-group" style="display:table;">
+            <span class="has-float-label">
+                <label class="formLabel" for="terminal_tid" th:text="#{terminal}"></label>
+                <input class="form-control" style="border-radius: 4px 0 0 4px;" type="text" th:value="${el.terminal_tid}" name="terminal_tid" id="terminal_tid" />
+            </span>
             <input type="hidden" name="terminal_status" id="terminal_status" th:value="${el.terminal_status}">
             <span class="input-group-btn">
-                <button th:class="${el.terminal_status == 0} ? 'btn btn-warning' : 'btn btn-success'" th:text="${el.terminal_status == 0} ? 'ВЫКЛ.' : 'ВКЛ.'" type="button" id="terminal_status_btn" onclick="terminalStatus()"></button>
+                <button th:class="${el.terminal_status == 0} ? 'btn btn-warning' : 'btn btn-success'" th:text="${el.terminal_status == 0} ? #{button.disable} : #{button.enable}" type="button" id="terminal_status_btn" onclick="terminalStatus()"></button>
             </span>
-        </div><br>
-<!--        <input type="text" th:value="${el.terminal_tid}" name="terminal_tid" id="terminal_tid"  class="form-control"/><br>-->
-        <input type="text" th:value="${el.terminal_tsp}" name="terminal_tsp" id="terminal_tsp"  class="form-control"/><br>
-        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="terminalEdit(this.id)"><span class="fa fa-save fa-fw"></span> обновить</button>
-        <button type="button" class="btn btn-success" onclick="getTerminalPanel()"><span class="fa fa-times fa-fw"></span> отмена</button>
+        </div>
+
+
+        <div class="form-group">
+            <span class="has-float-label">
+                <label class="formLabel" for="terminal_tsp" th:text="#{description}"></label>
+                <input class="form-control" type="text" th:value="${el.terminal_tsp}" name="terminal_tsp" id="terminal_tsp" /><br>
+            </span>
+        </div>
+        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="terminalEdit(this.id)"><span class="fa fa-save fa-fw"></span></span><span th:text="' ' + #{button.update}"></span></button>
+        <button type="button" class="btn btn-success" onclick="getTerminalPanel()"><span class="fa fa-times fa-fw"></span></span><span th:text="' ' + #{button.cancel}"></span></button>
     </form>
+
+    <script>
+
+        $(document).ready(function () {
+            var resultData;
+            $('#terminal_org_name').autocomplete({
+
+                source: function (query, result) {
+                    $("#loader").show();
+                    $.ajax({
+                        url: "/org-autocomplete?query=" + query.term,
+                        dataType: "json",
+                        type: "GET",
+                        success: function (data) {
+                            resultData = data;
+                            result($.map(data, function (item) {
+                                return item.org_name;
+                            }));
+
+                            $("#loader").hide();
+
+                        }
+                    });
+                },
+                minLength: 3,
+                select: function (event, ui) {
+                    for (var i = 0; i < resultData.length; i++) {
+                        if (resultData[i].org_name === ui.item.label) {
+                            $("#terminal_org_id").val(resultData[i].id);
+                            break;
+                        }
+                    }
+                }
+
+            });
+        });
+
+    </script>
 </div>

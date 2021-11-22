@@ -124,14 +124,24 @@ public class OperationController {
 
 
     @GetMapping("view-report")
-    public String viewReport(@RequestParam Long org_id, @RequestParam String date, @RequestParam String time, Model model){
+    public String viewReport(@RequestParam Long org_id, @RequestParam String date, @RequestParam String tid, @RequestParam String time, Model model){
         String[] dateSplited = date.split(" - ");
         List<Operation> operations;
 
         if(time.length() > 0){
-            operations = operationRepository.viewReportOrgIdTime(org_id, Timestamp.valueOf(dateSplited[1] + " " + time + ":00:00"), Timestamp.valueOf(dateSplited[1] + " " + time + ":59:59"));
+            if(tid.length() > 0){
+                operations = operationRepository.viewReportOrgIdTimeTid(org_id, tid, Timestamp.valueOf(dateSplited[1] + " " + time + ":00:00"), Timestamp.valueOf(dateSplited[1] + " " + time + ":59:59"));
+            } else {
+                operations = operationRepository.viewReportOrgIdTime(org_id, Timestamp.valueOf(dateSplited[1] + " " + time + ":00:00"), Timestamp.valueOf(dateSplited[1] + " " + time + ":59:59"));
+            }
+
         } else {
-            operations = operationRepository.viewReportOrgId(org_id, Timestamp.valueOf(dateSplited[0] + " 00:00:00"), Timestamp.valueOf(dateSplited[1] + " 23:59:59"));
+            if(tid.length() > 0){
+                operations = operationRepository.viewReportOrgIdTid(org_id, tid, Timestamp.valueOf(dateSplited[0] + " 00:00:00"), Timestamp.valueOf(dateSplited[1] + " 23:59:59"));
+            } else {
+                operations = operationRepository.viewReportOrgId(org_id, Timestamp.valueOf(dateSplited[0] + " 00:00:00"), Timestamp.valueOf(dateSplited[1] + " 23:59:59"));
+            }
+
         }
 
 

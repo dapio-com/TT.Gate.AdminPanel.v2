@@ -41,7 +41,7 @@ function terminalAddCheck() {
         },
         success: function (bool) {
             if(bool){
-                alert ("Терминал " + terminal_tid + " уже существует");
+                alert (alert_terminalExist);
                 $("#terminal_tid").val("");
                 $("#loader").hide();
 
@@ -74,7 +74,7 @@ function terminalAdd(terminal_org_id, terminal_tid, terminal_tsp) {
             }
         });
     } else {
-        alert ("Укажите TID и привяжите к Организации");
+        alert (alert_terminalTIDEnter);
         $("#loader").hide();
     }
 
@@ -131,7 +131,7 @@ function terminalEdit(id) {
             }
         });
     } else {
-        alert ("Введите Наименование Организации\nили\nTID Терминала");
+        alert (alert_terminalTIDEnter);
     }
     //cleanFormOrgAdd();
 
@@ -143,11 +143,11 @@ function terminalStatus() {
 
     if(terminalStatus === "1"){
         $("#terminal_status").val("0");
-        $("#terminal_status_btn").html("ВЫКЛ.");
+        $("#terminal_status_btn").html(button_disable);
         $("#terminal_status_btn").css('background-color', '#f0ad4e');
     } else {
         $("#terminal_status").val("1");
-        $("#terminal_status_btn").html("ВКЛ.");
+        $("#terminal_status_btn").html(button_enable);
         $("#terminal_status_btn").css('background-color', '#5cb85c');
 
 
@@ -158,7 +158,7 @@ function terminalStatus() {
 
 const confirmTerminalDelete = async (id) => {
 
-    const confirm = await ui.confirm("Подтвердить удаление записи о терминале ?");
+    const confirm = await ui.confirm(confirm_terminalDelete);
 
     if(confirm){
         terminalDelete(id);

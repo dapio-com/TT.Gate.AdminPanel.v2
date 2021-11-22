@@ -22,7 +22,7 @@ function passwordGen(len){
 
     //return Math.random().toString(36).slice(-8);
     let password = Math.random().toString(36).slice(-8);
-    alert("Пароль : " + password.toUpperCase());
+    alert(password.toUpperCase());
     $("#password").val(password.toUpperCase());
 
 }
@@ -34,7 +34,7 @@ function passwordGen2(len){
         password += symbols.charAt(Math.floor(Math.random() * symbols.length));
     }
     //return password;
-    alert("Пароль : " + password);
+    alert(password);
     $("#password").val(password);
 }
 
@@ -70,7 +70,7 @@ function userAddCheck() {
             //alert(bool);
             if(bool){
                 //cleanUserForm();
-                alert("Пользователь с таким именем существует");
+                alert(alert_userExist);
                 $("#loader").hide();
             } else {
                 userAdd(userName, userPassword, userDescription, userRole, userOrgGroupId, userOrgId);
@@ -106,7 +106,7 @@ function userAdd(userName, userPassword, userDescription, userRole, userOrgGroup
             }
         });
     } else {
-        alert ("Заполните все поля !");
+        alert (alert_userFieldsEnter);
         $("#loader").hide();
     }
 
@@ -116,7 +116,7 @@ function userAdd(userName, userPassword, userDescription, userRole, userOrgGroup
 
 const confirmUserDelete = async (id) => {
 
-    const confirm = await ui.confirm("Подтвердить удаление пользователя ?");
+    const confirm = await ui.confirm(confirm_userDelete);
 
     if(confirm){
         userDelete(id);
@@ -194,7 +194,7 @@ function userEdit(id) {
 
         });
     } else {
-        alert ("Введите Имя пользователя (логин) !");
+        alert (alert_userNameEnter);
     }
 
     //cleanFormOrgAdd();
@@ -225,7 +225,9 @@ function groupInputDisplay() {
     if($("#userrole").val() === "OPERATOR"){
         $(".group_input").removeAttr('disabled');
         $(".group_input").attr('id', 'org_group_name');
-        $(".group_input").attr('placeholder', 'группа');
+        //$(".group_input").attr('placeholder', 'группа');
+        $("#label_for_group_input").css("display", "block");
+        $("#label_for_org_input").css("display", "none");
         $(".group_input").val('');
 
         $("#org_group_id").val("0");
@@ -234,13 +236,18 @@ function groupInputDisplay() {
     } else if($("#userrole").val() === "AGENT") {
         $(".group_input").removeAttr('disabled');
         $(".group_input").attr('id', 'org_name');
-        $(".group_input").attr('placeholder', 'орг.');
+        //$(".group_input").attr('placeholder', 'орг.');
+        $("#label_for_group_input").css("display", "none");
+        $("#label_for_org_input").css("display", "block");
+
         $(".group_input").val('');
 
         $("#org_group_id").val("0");
         $("#org_id").val("0");
     } else {
         $(".group_input").attr('disabled', 'disabled');
+        $("#label_for_group_input").css("display", "none");
+        $("#label_for_org_input").css("display", "none");
         $(".group_input").val('');
         $("#org_group_id").val("0");
         $("#org_id").val("0");

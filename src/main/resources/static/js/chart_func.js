@@ -367,10 +367,12 @@ function chartOrgGroupSelect(val){
         $("#org_btn").removeClass("btn-default").addClass("btn-warning");
         $("#org_group_btn").removeClass("btn-warning").addClass("btn-default");
 
+        $("#label_for_org_input").css("display", "block");
         $("#org_name").attr("type", "text");
         $("#org_name").val("");
         $("#org_id").val("0");
 
+        $("#label_for_group_input").css("display", "none");
         $("#org_group_name").attr("type", "hidden");
         $("#org_group_name").val("");
         $("#org_group_id").val("0");
@@ -380,10 +382,12 @@ function chartOrgGroupSelect(val){
         $("#org_btn").removeClass("btn-warning").addClass("btn-default");
         $("#org_group_btn").removeClass("btn-default").addClass("btn-warning");
 
+        $("#label_for_org_input").css("display", "none");
         $("#org_name").attr("type", "hidden");
         $("#org_name").val("");
         $("#org_id").val("0");
 
+        $("#label_for_group_input").css("display", "block");
         $("#org_group_name").attr("type", "text");
         $("#org_group_name").val("");
         $("#org_group_id").val("0");

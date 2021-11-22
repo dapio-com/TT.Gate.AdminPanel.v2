@@ -4,7 +4,7 @@
     <!-- PAGE TITLE -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header" id="page-header">Терминалы</h1>
+            <h1 class="page-header" id="page-header" th:text="#{menu-item.terminals}">Терминалы</h1>
         </div>
     </div>
 
@@ -12,126 +12,47 @@
     <div class="row" id="widgets">
         <div class="col-lg-5 col-md-5" id="terminal_form">
             <div style="margin-bottom:20px">
-                <h4>Добавить терминал</h4>
-                <form>
+                <h4 th:text="#{add.terminal}">Добавить терминал</h4>
+                <form style="margin-top: 20px">
 
-                    <script>
-
-                        $(document).ready(function () {
-                            var resultData;
-                            $('#terminal_org_name').autocomplete({
-
-                                source: function (query, result) {
-                                    $("#loader").show();
-                                    $.ajax({
-                                        url: "/org-autocomplete?query=" + query.term + "&orgGroupId=" + $('#org_group_id').val(),
-                                        dataType: "json",
-                                        type: "GET",
-                                        success: function (data) {
-                                            resultData = data;
-                                            result($.map(data, function (item) {
-                                                return item.org_name;
-                                            }));
-                                            $("#loader").hide();
-
-                                        }
-                                    });
-                                },
-                                minLength: 3,
-                                select: function (event, ui) {
-                                    for (var i = 0; i < resultData.length; i++) {
-                                        if (resultData[i].org_name === ui.item.label) {
-                                            $("#terminal_org_id").val(resultData[i].id);
-                                            break;
-                                        }
-                                    }
-
-
-                                    // let id = resultData.filter(function (result) {
-                                    //     console.log("RESULT : " + result.org_name);
-                                    //     console.log("UI : ", ui.item.org_name);
-                                    //     //return result.org_name === ui.item.org_name;
-                                    //
-                                    // });
-                                    // console.log(id);
-                                }
-
-                            });
-                        });
-
-                    </script>
-                    <input type="text" name="terminal_org_name" id="terminal_org_name"
-                           placeholder="введите название организации" class="form-control"/><br>
+                    <div class="form-group">
+                        <span class="has-float-label">
+                            <label class="formLabel" for="terminal_org_name" th:text="#{orgName}"></label>
+                            <input class="form-control" type="text" name="terminal_org_name" id="terminal_org_name" /><br>
+                        </span>
+                    </div>
                     <input type="hidden" name="terminal_org_id" id="terminal_org_id" value="0"/>
                     <input type="hidden" id="org_group_id" value="0"/>
 
-                    <input type="text" name="terminal_tid" id="terminal_tid" placeholder="введите TID"
-                           class="form-control" maxlength="8" minlength="8"/><br>
-                    <input type="text" name="terminal_tsp" id="terminal_tsp"
-                           placeholder="введите адрес установки/описание" class="form-control"/><br>
+                    <div class="form-group">
+                        <span class="has-float-label">
+                            <label class="formLabel" for="terminal_tid" th:text="#{terminal}"></label>
+                            <input class="form-control" type="text" name="terminal_tid" id="terminal_tid" maxlength="8" minlength="8"/><br>
+                        </span>
+                    </div>
 
-                    <button type="button" class="btn btn-success" onclick="cleanTerminalForm()"><span class="fa fa-file fa-fw"></span> сброс</button>
-                    <button type="button" class="btn btn-success" onclick="terminalAddCheck()"><span class="fa fa-plus fa-fw"></span> добавить</button>
+                    <div class="form-group">
+                        <span class="has-float-label">
+                            <label class="formLabel" for="terminal_tsp" th:text="#{description}"></label>
+                            <input class="form-control" type="text" name="terminal_tsp" id="terminal_tsp" /><br>
+                        </span>
+                    </div>
+
+                    <button type="button" class="btn btn-success" onclick="cleanTerminalForm()"><span class="fa fa-file fa-fw"></span></span><span th:text="' ' + #{button.clear}"></span></button>
+                    <button type="button" class="btn btn-success" onclick="terminalAddCheck()"><span class="fa fa-plus fa-fw"></span></span><span th:text="' ' + #{button.add}"></span></button>
 
                 </form>
             </div>
         </div>
     </div>
     <div class="row col-lg-4 col-md-4" style="margin-bottom: 20px">
-        <!--        <div class="col-lg-4 col-md-4">-->
+
         <form class="form-inline">
 
-
-                <script> // SEARCH SCRIPT
-                $(document).ready(function () {
-                    var timer;
-                    $('#terminal_search').keyup(function () {
-                        var searchFor = $('#terminal_search').val().trim();
-                        window.clearTimeout(timer);
-                        if (searchFor.length > 3) {
-                            //alert(searchFor);
-                            //loading_show();
-                            timer = setTimeout(function () {
-                                $("#loader").show();
-                                $.ajax({
-                                    url: "/terminal-search",
-                                    cache: false,
-                                    type: "POST",
-                                    data: {
-                                        searchFor: searchFor
-                                    },
-                                    success: function (text) {
-                                        $("#terminal-panel-body").html(text);
-                                        //loading_hide();
-                                        $("#loader").hide();
-                                    }
-                                });
-                            }, 1000);
-                        }
-                    });
-                });
-                </script>
-
-            <script>
-
-                $(document).ready(function() {
-
-                    $("#terminal_org_name").blur(function() {
-                        if($("#terminal_org_name").val().length === 0){
-                            $("#terminal_org_id").val("0");
-
-                        }
-                        //alert($("#org_name").val().length);
-                    });
-                });
-            </script>
-                <input type="text" class="form-control" placeholder="поиск..." id="terminal_search">
-<!--                <button type="button" class="btn btn-success" id="allBtn" th:value="${page.getTotalElements()}"-->
-<!--                        onclick="terminalShowAll()">все-->
-<!--                </button>-->
-
-
-
+                <span class="has-float-label">
+                    <label class="formLabel" for="terminal_search" th:text="#{label.search}"></label>
+                    <input class="form-control" type="text" id="terminal_search">
+                </span>
 
         </form>
     </div>
@@ -158,4 +79,83 @@
     </div>
 
 
+    <script>
+
+        $(document).ready(function () {
+            var resultData;
+            $('#terminal_org_name').autocomplete({
+
+                source: function (query, result) {
+                    $("#loader").show();
+                    $.ajax({
+                        url: "/org-autocomplete?query=" + query.term + "&orgGroupId=" + $('#org_group_id').val(),
+                        dataType: "json",
+                        type: "GET",
+                        success: function (data) {
+                            resultData = data;
+                            result($.map(data, function (item) {
+                                return item.org_name;
+                            }));
+                            $("#loader").hide();
+
+                        }
+                    });
+                },
+                minLength: 3,
+                select: function (event, ui) {
+                    for (var i = 0; i < resultData.length; i++) {
+                        if (resultData[i].org_name === ui.item.label) {
+                            $("#terminal_org_id").val(resultData[i].id);
+                            break;
+                        }
+                    }
+
+                }
+
+            });
+        });
+
+
+
+     // SEARCH SCRIPT
+    $(document).ready(function () {
+        var timer;
+        $('#terminal_search').keyup(function () {
+            var searchFor = $('#terminal_search').val().trim();
+            window.clearTimeout(timer);
+            if (searchFor.length > 3) {
+                //alert(searchFor);
+                //loading_show();
+                timer = setTimeout(function () {
+                    $("#loader").show();
+                    $.ajax({
+                        url: "/terminal-search",
+                        cache: false,
+                        type: "POST",
+                        data: {
+                            searchFor: searchFor
+                        },
+                        success: function (text) {
+                            $("#terminal-panel-body").html(text);
+                            //loading_hide();
+                            $("#loader").hide();
+                        }
+                    });
+                }, 1000);
+            }
+        });
+    });
+
+
+        $(document).ready(function() {
+
+            $("#terminal_org_name").blur(function() {
+                if($("#terminal_org_name").val().length === 0){
+                    $("#terminal_org_id").val("0");
+
+                }
+                //alert($("#org_name").val().length);
+            });
+        });
+    </script>
 </div>

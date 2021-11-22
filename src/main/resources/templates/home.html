@@ -55,8 +55,8 @@
         <span class="alert_text"></span>
         <hr>
         <div style="text-align: center">
-            <button id="confirm_ok_btn" class="btn btn-success alert_btn">Да</button>
-            <button id="confirm_cancel_btn" class="btn btn-success alert_btn">Нет</button>
+            <button id="confirm_ok_btn" class="btn btn-success alert_btn" th:text="#{yes}">Да</button>
+            <button id="confirm_cancel_btn" class="btn btn-success alert_btn" th:text="#{no}">Нет</button>
         </div>
     </div>
 </div>
@@ -104,7 +104,21 @@
             <li class="dropdown">
                 <form action="/logout" method="post">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button type="submit" class="btn-link"><span class="fa fa-sign-out fa-fw"></span> Выйти</button>
+                    <button type="submit" class="btn-link"><span class="fa fa-sign-out fa-fw"></span><span th:text="#{button.exit}"></span></button>
+                </form>
+            </li>
+
+            <li class="dropdown">
+                <form action="/" method="get">
+                    <input type="hidden" name="locale" value="ru">
+                    <button type="submit" class="btn-link"><img src="img/ru.png"/></button>
+
+                </form>
+            </li>
+            <li class="dropdown">
+                <form action="/" method="get">
+                    <input type="hidden" name="locale" value="tm">
+                    <button type="submit" class="btn-link"><img src="img/tm.png"/></button>
                 </form>
             </li>
 
@@ -116,27 +130,27 @@
                 <ul class="nav" id="side-menu">
 
                     <li sec:authorize="hasAuthority('OPERATOR')">
-                        <a onclick="getMainPanel()" class="dashboard_link"><i class="fa fa-dashboard fa-fw"></i> Главная панель</a>
+                        <a onclick="getMainPanel()" class="dashboard_link"><i class="fa fa-dashboard fa-fw" style="margin-right: 10px"></i><span th:text="#{menu-item.monitor}">Панель мониторинга</span></a>
                     </li>
                     <li sec:authorize="hasAuthority('ADMIN')">
-                        <a onclick="getOrgGroupPanel()" class="dashboard_link"><i class="fa fa-cubes fa-fw"></i> Группы</a>
+                        <a onclick="getOrgGroupPanel()" class="dashboard_link"><i class="fa fa-cubes fa-fw" style="margin-right: 10px"></i><span th:text="#{menu-item.groups}">Группы</span></a>
                     </li>
                     <li sec:authorize="hasAuthority('ADMIN')">
-                        <a onclick="getOrgPanel()" class="dashboard_link"><i class="fa fa-institution fa-fw"></i> Организации</a>
+                        <a onclick="getOrgPanel()" class="dashboard_link"><i class="fa fa-institution fa-fw" style="margin-right: 10px"></i><span th:text="#{menu-item.organizations}">Организации</span></a>
                     </li>
                     <li sec:authorize="hasAuthority('ADMIN')">
-                        <a onclick="getTerminalPanel()" class="dashboard_link"><i class="fa fa-tablet fa-fw"></i> Терминалы</a>
+                        <a onclick="getTerminalPanel()" class="dashboard_link"><i class="fa fa-tablet fa-fw" style="margin-right: 10px"></i><span th:text="#{menu-item.terminals}">Терминалы</span></a>
                     </li>
                     <li>
-                        <a onclick="getOperationPanel()" class="dashboard_link"><i class="fa fa-list fa-fw"></i> Операции</a>
+                        <a onclick="getOperationPanel()" class="dashboard_link"><i class="fa fa-list fa-fw" style="margin-right: 10px"></i><span th:text="#{menu-item.operations}">Операции</span></a>
                     </li>
 
                     <li sec:authorize="hasAuthority('ADMIN')">
-                        <a onclick="getChartPanel()" class="dashboard_link"><i class="fa fa-bar-chart-o fa-fw"></i> Графики</a>
+                        <a onclick="getChartPanel()" class="dashboard_link"><i class="fa fa-bar-chart-o fa-fw" style="margin-right: 10px"></i><span th:text="#{menu-item.charts}">Графики</span></a>
                     </li>
 
                     <li sec:authorize="hasAuthority('ADMIN')">
-                        <a onclick="getUserPanel()" class="dashboard_link"><i class="fa fa-users fa-fw"></i> Пользователи</a>
+                        <a onclick="getUserPanel()" class="dashboard_link"><i class="fa fa-users fa-fw" style="margin-right: 10px"></i><span th:text="#{menu-item.users}">Пользователи</span></a>
                     </li>
 
 
@@ -270,6 +284,28 @@
 </script>
 
 
+<script th:inline="javascript">
+    let confirm_orgGroupDelete = [[#{confirm.orgGroupDelete}]];
+    let confirm_orgDelete = [[#{confirm.orgDelete}]];
+    let confirm_terminalDelete = [[#{confirm.terminalDelete}]];
+    let confirm_userDelete = [[#{confirm.userDelete}]];
+
+    let alert_orgGroupDelete = [[#{alert.orgGroupDelete}]];
+    let alert_orgGroupNameEnter = [[#{alert.orgGroupNameEnter}]];
+    let alert_orgNameEnter = [[#{alert.orgNameEnter}]];
+    let alert_terminalTIDEnter = [[#{alert.terminalTIDEnter}]];
+    let alert_userNameEnter = [[#{alert.userNameEnter}]];
+    let alert_userFieldsEnter = [[#{alert.userFieldsEnter}]];
+    let alert_orgDelete = [[#{alert.orgDelete}]];
+    let alert_orgGroupExist = [[#{alert.orgGroupExist}]];
+    let alert_orgExist = [[#{alert.orgExist}]];
+    let alert_terminalExist = [[#{alert.terminalExist}]];
+    let alert_userExist = [[#{alert.userExist}]];
+
+    let button_enable = [[#{button.enable}]];
+    let button_disable = [[#{button.disable}]];
+
+</script>
 
 
 

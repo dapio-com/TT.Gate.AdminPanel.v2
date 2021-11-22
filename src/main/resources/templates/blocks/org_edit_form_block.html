@@ -1,65 +1,78 @@
 <div xmlns:th="http://www.thymeleaf.org" style="margin-bottom:20px" >
-    <h4>Редактировать организацию</h4>
-    <form th:each="el : ${org}">
-        <script>
-
-            $(document).ready(function () {
-                var resultData;
-                $('#org_group_name').autocomplete({
-
-                    source: function (query, result) {
-                        $("#loader").show();
-                        $.ajax({
-                            url: "/org-group-autocomplete?query=" + query.term,
-                            dataType: "json",
-                            type: "GET",
-                            success: function (data) {
-                                resultData = data;
-                                result($.map(data, function (item) {
-                                    return item.org_group_name;
-                                }));
-                                $("#loader").hide();
-
-                            }
-                        });
-                    },
-                    minLength: 3,
-                    select: function (event, ui) {
-                        for (var i = 0; i < resultData.length; i++) {
-                            if (resultData[i].org_group_name === ui.item.label) {
-                                $("#org_group_id").val(resultData[i].id);
-                                break;
-                            }
-                        }
-                    }
-
-                });
-            });
-
-
-        </script>
-
-        <script>
-
-            $(document).ready(function() {
-                $("#org_group_name").blur(function() {
-                    if($("#org_group_name").val().length === 0){
-                        $("#org_group_id").val("0");
-
-                    }
-                    //alert($("#org_name").val().length);
-                });
-            });
-        </script>
-
-        <input type="text" th:value="${el.org_group_name}" name="org_group_name" id="org_group_name" placeholder="введите название группы" class="form-control"/><br>
+    <h4 th:text="#{edit.organization}">Редактировать организацию</h4>
+    <form th:each="el : ${org}" style="margin-top: 20px">
+        <div class="form-group">
+            <span class="has-float-label">
+                <label class="formLabel" for="org_group_name" th:text="#{groupName}"></label>
+                <input class="form-control" type="text" th:value="${el.org_group_name}" name="org_group_name" id="org_group_name" /><br>
+            </span>
+        </div>
         <input type="hidden" name="org_group_id" id="org_group_id" th:value="${el.org_group_id}"/>
 
-        <input type="text" th:value="${el.org_name}" name="org_name" id="org_name" placeholder="введите название организации" class="form-control"/><br>
-        <input type="text" th:value="${el.org_owner}" name="org_owner" id="org_owner" placeholder="собственник" class="form-control"/><br>
+        <div class="form-group">
+            <span class="has-float-label">
+                <label class="formLabel" for="org_name" th:text="#{orgName}"></label>
+                <input class="form-control"type="text" th:value="${el.org_name}" name="org_name" id="org_name" /><br>
+            </span>
+        </div>
 
-        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="orgEdit(this.id)"><span class="fa fa-save fa-fw"></span> обновить</button>
-        <button type="button" class="btn btn-success" onclick="getOrgPanel()" style="margin-right: 20px"><span class="fa fa-times fa-fw"></span>отмена</button>
-        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="agentGenerate()"><span class="fa fa-user fa-fw"></span> сгенерить агента</button>
+
+        <div class="form-group">
+            <span class="has-float-label">
+                <label class="formLabel" for="org_owner" th:text="#{orgOwner}"></label>
+                <input class="form-control" type="text" th:value="${el.org_owner}" name="org_owner" id="org_owner" /><br>
+            </span>
+        </div>
+
+        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="orgEdit(this.id)"><span class="fa fa-save fa-fw"></span></span><span th:text="' ' + #{button.update}"></span></button>
+        <button type="button" class="btn btn-success" onclick="getOrgPanel()" style="margin-right: 20px"><span class="fa fa-times fa-fw"></span></span><span th:text="' ' + #{button.cancel}"></span></button>
     </form>
+
+    <script>
+
+        $(document).ready(function () {
+            var resultData;
+            $('#org_group_name').autocomplete({
+
+                source: function (query, result) {
+                    $("#loader").show();
+                    $.ajax({
+                        url: "/org-group-autocomplete?query=" + query.term,
+                        dataType: "json",
+                        type: "GET",
+                        success: function (data) {
+                            resultData = data;
+                            result($.map(data, function (item) {
+                                return item.org_group_name;
+                            }));
+                            $("#loader").hide();
+
+                        }
+                    });
+                },
+                minLength: 3,
+                select: function (event, ui) {
+                    for (var i = 0; i < resultData.length; i++) {
+                        if (resultData[i].org_group_name === ui.item.label) {
+                            $("#org_group_id").val(resultData[i].id);
+                            break;
+                        }
+                    }
+                }
+
+            });
+        });
+
+
+        $(document).ready(function() {
+            $("#org_group_name").blur(function() {
+                if($("#org_group_name").val().length === 0){
+                    $("#org_group_id").val("0");
+
+                }
+                //alert($("#org_name").val().length);
+            });
+        });
+    </script>
+
 </div>

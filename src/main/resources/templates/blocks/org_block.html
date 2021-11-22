@@ -4,7 +4,7 @@
     <!-- PAGE TITLE -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header" id="page-header">Организации</h1>
+            <h1 class="page-header" id="page-header" th:text="#{menu-item.organizations}">Организации</h1>
         </div>
     </div>
 
@@ -12,51 +12,31 @@
     <div class="row" id="widgets">
         <div class="col-lg-5 col-md-5" id="org_form">
             <div style="margin-bottom:20px">
-                <h4>Добавить организацию</h4>
-                <form>
-                    <script>
+                <h4 th:text="#{add.organization}">Добавить организацию</h4>
+                <form style="margin-top: 20px;">
+                    <div class="form-group">
+                    <span class="has-float-label">
+                        <label class="formLabel" for="org_group_name" th:text="#{groupName}"></label>
+                        <input class="form-control" type="text" name="org_group_name" id="org_group_name" /><br>
+                    </span>
+                    </div>
 
-                        $(document).ready(function () {
-                            var resultData;
-                            $('#org_group_name').autocomplete({
-
-                                source: function (query, result) {
-                                    $("#loader").show();
-                                    $.ajax({
-                                        url: "/org-group-autocomplete?query=" + query.term,
-                                        dataType: "json",
-                                        type: "GET",
-                                        success: function (data) {
-                                            resultData = data;
-                                            result($.map(data, function (item) {
-                                                return item.org_group_name;
-                                            }));
-                                            $("#loader").hide();
-
-                                        }
-                                    });
-                                },
-                                minLength: 3,
-                                select: function (event, ui) {
-                                    for (var i = 0; i < resultData.length; i++) {
-                                        if (resultData[i].org_group_name === ui.item.label) {
-                                            $("#org_group_id").val(resultData[i].id);
-                                            break;
-                                        }
-                                    }
-                                }
-
-                            });
-                        });
-
-                    </script>
-                    <input type="text" name="org_group_name" id="org_group_name" placeholder="введите название группы" class="form-control"/><br>
                     <input type="hidden" name="org_group_id" id="org_group_id" value="0"/>
 
-                    <input type="text" name="org_name" id="org_name" placeholder="введите название организации" class="form-control"/><br>
-                    <input type="text" name="org_owner" id="org_owner" placeholder="собственник" class="form-control"/><br>
-                    <button type="button" class="btn btn-success" onclick="cleanOrgForm()"><span class="fa fa-file fa-fw"></span> сброс</button>
-                    <button type="button" class="btn btn-success" onclick="orgAddCheck()"><span class="fa fa-plus fa-fw"></span> добавить</button>
+                    <div class="form-group">
+                    <span class="has-float-label">
+                        <label class="formLabel" for="org_name" th:text="#{orgName}"></label>
+                        <input class="form-control" type="text" name="org_name" id="org_name" /><br>
+                    </span>
+                    </div>
+                    <div class="form-group">
+                    <span class="has-float-label">
+                        <label class="formLabel" for="org_owner" th:text="#{orgOwner}"></label>
+                        <input class="form-control" type="text" name="org_owner" id="org_owner" /><br>
+                    </span>
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="cleanOrgForm()"><span class="fa fa-file fa-fw"></span></span><span th:text="' ' + #{button.clear}"></span></button>
+                    <button type="button" class="btn btn-success" onclick="orgAddCheck()"><span class="fa fa-plus fa-fw"></span></span><span th:text="' ' + #{button.add}"></span></button>
                 </form>
             </div>
         </div>
@@ -64,37 +44,10 @@
     <div class="row col-lg-4 col-md-4" style="margin-bottom: 20px">
         <form class="form-inline">
 
-            <script> // SEARCH SCRIPT
-            $(document).ready(function () {
-                var timer;
-                $('#org_search').keyup(function(){
-                    var searchFor = $('#org_search').val().trim();
-                    window.clearTimeout(timer);
-                    if (searchFor.length > 2) {
-                        //alert(searchFor);
-                        //loading_show();
-                        timer = setTimeout(function () {
-                            $("#loader").show();
-                            $.ajax({
-                                url: "/org-search",
-                                cache: false,
-                                type: "POST",
-                                data: {
-                                    searchFor: searchFor
-                                },
-                                success: function(text){
-                                    $("#org-panel-body").html(text);
-                                    //loading_hide();
-                                    $("#loader").hide();
-                                }
-                            });
-                        }, 1000);
-                    }
-                });
-            });
-            </script>
-            <input type="text" class="form-control" placeholder="поиск..." id="org_search">
-<!--            <button type="button" class="btn btn-success" onclick="orgShowAll()">все</button>-->
+            <span class="has-float-label">
+                <label class="formLabel" for="org_search" th:text="#{label.search}"></label>
+                <input class="form-control" type="text" id="org_search">
+            </span>
 
         </form>
     </div>
@@ -133,7 +86,70 @@
         });
 
 
+        $(document).ready(function () {
+            var resultData;
+            $('#org_group_name').autocomplete({
+
+                source: function (query, result) {
+                    $("#loader").show();
+                    $.ajax({
+                        url: "/org-group-autocomplete?query=" + query.term,
+                        dataType: "json",
+                        type: "GET",
+                        success: function (data) {
+                            resultData = data;
+                            result($.map(data, function (item) {
+                                return item.org_group_name;
+                            }));
+                            $("#loader").hide();
+
+                        }
+                    });
+                },
+                minLength: 3,
+                select: function (event, ui) {
+                    for (var i = 0; i < resultData.length; i++) {
+                        if (resultData[i].org_group_name === ui.item.label) {
+                            $("#org_group_id").val(resultData[i].id);
+                            break;
+                        }
+                    }
+                }
+
+            });
+        });
+
+
+        // SEARCH SCRIPT
+    $(document).ready(function () {
+        var timer;
+        $('#org_search').keyup(function(){
+            var searchFor = $('#org_search').val().trim();
+            window.clearTimeout(timer);
+            if (searchFor.length > 2) {
+                //alert(searchFor);
+                //loading_show();
+                timer = setTimeout(function () {
+                    $("#loader").show();
+                    $.ajax({
+                        url: "/org-search",
+                        cache: false,
+                        type: "POST",
+                        data: {
+                            searchFor: searchFor
+                        },
+                        success: function(text){
+                            $("#org-panel-body").html(text);
+                            //loading_hide();
+                            $("#loader").hide();
+                        }
+                    });
+                }, 1000);
+            }
+        });
+    });
     </script>
+
 
 
 </div>

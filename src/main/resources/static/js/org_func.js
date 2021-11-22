@@ -40,7 +40,7 @@ function orgAddCheck() {
         success: function (bool) {
             if(bool){
                 cleanOrgForm();
-                alert("Такая организация уже существует");
+                alert(alert_orgExist);
                 $("#loader").hide();
             } else {
                 orgAdd(org_group_id, org_name, org_owner);
@@ -74,7 +74,7 @@ function orgAdd(org_group_id, org_name, org_owner) {
             }
         });
     } else {
-        alert ("Введите Наименование Организации !");
+        alert (alert_orgNameEnter);
         $("#loader").hide();
     }
 
@@ -85,7 +85,7 @@ function orgAdd(org_group_id, org_name, org_owner) {
 
 const confirmOrgDelete = async (id) => {
 
-    const confirm = await ui.confirm("Подтвердить удаление организации ?");
+    const confirm = await ui.confirm(confirm_orgDelete);
 
     if(confirm){
         orgDelete(id);
@@ -107,7 +107,7 @@ function orgDelete(id) {
             },
             success: function (text) {
                 if(text.length === 0){
-                    alert("Невозможно удалить ! Существуют привязанные терминалы !")
+                    alert(alert_orgDelete)
                 } else {
                     cleanOrgForm();
                     $("#page-wrapper").html(text);
@@ -169,7 +169,7 @@ function orgEdit(id) {
 
         });
     } else {
-        alert ("Введите Наименование Организации !");
+        alert (alert_orgNameEnter);
     }
     //cleanFormOrgAdd();
 

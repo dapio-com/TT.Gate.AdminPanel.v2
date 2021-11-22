@@ -3,7 +3,7 @@
     <!-- PAGE TITLE -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header" id="page-header">Главная панель</h1>
+            <h1 class="page-header" id="page-header" th:text="#{menu-item.monitor}">Панель мониторинга</h1>
         </div>
     </div>
 
@@ -19,13 +19,13 @@
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge" id="total-orgs">0</div>
-                            <div>Всего организаций</div>
+                            <div th:text="#{totalOrganizations}">Всего организаций</div>
                         </div>
                     </div>
                 </div>
                 <a onclick="getOrgPanel()" class="dashboard_link" sec:authorize="hasAuthority('ADMIN')">
                     <div class="panel-footer">
-                        <span class="pull-left">перейти</span>
+                        <span class="pull-left" th:text="#{goto}">перейти</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -41,13 +41,13 @@
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge" id="total-terminals">0</div>
-                            <div>Всего терминалов</div>
+                            <div th:text="#{totalTerminals}">Всего терминалов</div>
                         </div>
                     </div>
                 </div>
                 <a onclick="getTerminalPanel()" class="dashboard_link" sec:authorize="hasAuthority('ADMIN')">
                     <div class="panel-footer">
-                        <span class="pull-left">перейти</span>
+                        <span class="pull-left" th:text="#{goto}">перейти</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -63,13 +63,13 @@
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge" id="total-operations">0</div>
-                            <div>Всего операций</div>
+                            <div th:text="#{totalOperations}">Всего операций</div>
                         </div>
                     </div>
                 </div>
                 <a onclick="getOperationPanel()" class="dashboard_link" sec:authorize="hasAuthority('ADMIN')">
                     <div class="panel-footer">
-                        <span class="pull-left">перейти</span>
+                        <span class="pull-left" th:text="#{goto}">перейти</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -85,13 +85,13 @@
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge" id="operations-per-minute">0</div>
-                            <div>Операций в минуту</div>
+                            <div th:text="#{operationsPerMin}">Операций в минуту</div>
                         </div>
                     </div>
                 </div>
                 <a onclick="getOperationPanel()" class="dashboard_link" sec:authorize="hasAuthority('ADMIN')">
                     <div class="panel-footer">
-                        <span class="pull-left">перейти</span>
+                        <span class="pull-left" th:text="#{goto}">перейти</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>

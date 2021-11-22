@@ -38,9 +38,15 @@ public interface OperationRepository extends CrudRepository<Operation, Long> {
     @Query(value = "SELECT * FROM operation WHERE op_org_id = :org_id AND op_date_time BETWEEN :date_start AND :date_end AND op_mti = '0200' ORDER BY id DESC", nativeQuery = true)
     List<Operation> viewReportOrgIdTime(@Param("org_id") Long org_id, @Param("date_start") Timestamp date_start, @Param("date_end") Timestamp date_end);
 
+    @Query(value = "SELECT * FROM operation WHERE op_org_id = :org_id AND op_tid = :tid AND op_date_time BETWEEN :date_start AND :date_end AND op_mti = '0200' ORDER BY id DESC", nativeQuery = true)
+    List<Operation> viewReportOrgIdTimeTid(@Param("org_id") Long org_id, @Param("tid") String tid,  @Param("date_start") Timestamp date_start, @Param("date_end") Timestamp date_end);
+
+
     @Query(value = "SELECT * FROM operation WHERE op_org_id = :org_id AND op_date_time BETWEEN :date_start AND :date_end AND op_mti = '0200' ORDER BY id DESC", nativeQuery = true)
     List<Operation> viewReportOrgId(@Param("org_id") Long org_id, @Param("date_start") Timestamp date_start, @Param("date_end") Timestamp date_end);
 
+    @Query(value = "SELECT * FROM operation WHERE op_org_id = :org_id AND op_tid = :tid AND op_date_time BETWEEN :date_start AND :date_end AND op_mti = '0200' ORDER BY id DESC", nativeQuery = true)
+    List<Operation> viewReportOrgIdTid(@Param("org_id") Long org_id, @Param("tid") String tid, @Param("date_start") Timestamp date_start, @Param("date_end") Timestamp date_end);
 
 
     @Query("SELECT new com.ttranz.ttgateadmin.dto.DtoChart(" +

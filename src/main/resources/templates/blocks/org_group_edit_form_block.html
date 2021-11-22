@@ -1,10 +1,20 @@
 <div xmlns:th="http://www.thymeleaf.org" style="margin-bottom:20px" >
-    <h4>Редактировать группу</h4>
-    <form th:each="el : ${org_group}">
-        <input type="text" th:value="${el.org_group_name}" name="org_group_name" id="org_group_name" placeholder="введите название группы" class="form-control"/><br>
-        <input type="text" th:value="${el.org_group_description}" name="org_group_description" id="org_group_description" placeholder="описание группы" class="form-control"/><br>
-        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="orgGroupEdit(this.id)"><span class="fa fa-save fa-fw"></span> обновить</button>
-        <button type="button" class="btn btn-success" onclick="getOrgGroupPanel()" style="margin-right: 20px"><span class="fa fa-times fa-fw"></span> отмена</button>
+    <h4 th:text="#{edit.group}">Редактировать группу</h4>
+    <form th:each="el : ${org_group}" style="margin-top: 20px">
+        <div class="form-group">
+            <span class="has-float-label">
+                <label class="formLabel" for="org_group_name" th:text="#{groupName}"></label>
+                <input class="form-control" type="text" th:value="${el.org_group_name}" name="org_group_name" id="org_group_name"/><br>
+            </span>
+        </div>
+        <div class="form-group">
+            <span class="has-float-label">
+                <label class="formLabel" for="org_group_description" th:text="#{description}"></label>
+                <input class="form-control" type="text" th:value="${el.org_group_description}" name="org_group_description" id="org_group_description"/><br>
+            </span>
+        </div>
+        <button type="button" class="btn btn-success" th:id="${el.id}" onclick="orgGroupEdit(this.id)"><span class="fa fa-save fa-fw"></span><span th:text="' ' + #{button.update}"></span></button>
+        <button type="button" class="btn btn-success" onclick="getOrgGroupPanel()" style="margin-right: 20px"><span class="fa fa-times fa-fw"></span><span th:text="' ' + #{button.cancel}"></span></button>
 
     </form>
 </div>

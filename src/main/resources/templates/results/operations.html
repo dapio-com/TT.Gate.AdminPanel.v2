@@ -2,11 +2,11 @@
     <table class="table table-hover" xmlns:th="http://www.thymeleaf.org">
         <thead style="position: sticky; top: 0; background-color: white">
         <tr>
-            <th>Дата/Время</th>
-            <th>ТСП</th>
-            <th>Терминал</th>
-            <th>Карта</th>
-            <th>Сумма</th>
+            <th th:text="#{date}">Дата / Время</th>
+            <th th:text="#{tsp}">ТСП</th>
+            <th th:text="#{terminal}">Терминал</th>
+            <th th:text="#{cardNum}">Номер карты</th>
+            <th th:text="#{summ}">Сумма</th>
         </tr>
         </thead>
         <tbody>
