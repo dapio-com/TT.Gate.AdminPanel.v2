@@ -65,12 +65,12 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>4.0.1</version>
+			<version>5.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>4.0.1</version>
+			<version>5.0.0</version>
 		</dependency>
 
 
@@ -79,26 +79,32 @@
 
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-<!--				<configuration>-->
-<!--					<jvmArguments>-->
-<!--						-Xms4048m-->
-<!--						-Xmx8096m-->
-<!--					</jvmArguments>-->
-<!--				</configuration>-->
-			</plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-<!--                <configuration>-->
-<!--                    <source>10</source>-->
-<!--                    <target>10</target>-->
-<!--                </configuration>-->
-            </plugin>
-        </plugins>
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.springframework.boot</groupId>-->
+<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.springframework.boot</groupId>-->
+<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--&lt;!&ndash;				<configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;					<jvmArguments>&ndash;&gt;-->
+<!--&lt;!&ndash;						-Xms4048m&ndash;&gt;-->
+<!--&lt;!&ndash;						-Xmx8096m&ndash;&gt;-->
+<!--&lt;!&ndash;					</jvmArguments>&ndash;&gt;-->
+<!--&lt;!&ndash;				</configuration>&ndash;&gt;-->
+<!--			</plugin>-->
+<!--&lt;!&ndash;            <plugin>&ndash;&gt;-->
+<!--&lt;!&ndash;                <groupId>org.apache.maven.plugins</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <artifactId>maven-compiler-plugin</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <configuration>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <source>10</source>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <target>10</target>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </configuration>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            </plugin>&ndash;&gt;-->
+<!--        </plugins>-->
 
 		<resources>
 			<resource>
